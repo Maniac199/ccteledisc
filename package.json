@@ -1,0 +1,20 @@
+{
+  "name": "ccauditbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ccauditbot.js",
+  "scripts": {
+    "start": "pm2 restart ecosystem.config.js --env production",
+    "start:dev": "nodemon ccauditbot.js"
+  },
+  "author": "fireseal",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.7",
+    "pm2": "^4.5.5",
+    "winston": "^3.3.3"
+  }
+}
