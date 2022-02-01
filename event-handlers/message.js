@@ -8,14 +8,14 @@ const createMessageHandler = (context) => (message) => {
   // Don't respond to messages that don't have the correct
   // prefix, are from another bot or aren't in the correct
   // bot channel.
-  if (
+  /* if (
     !content.startsWith(botPrefix) ||
     author.bot ||
     channel.name !== botLogsChannelName
   ) {
     return;
   }
-
+*/
   context.message = message;
   context.args = message.content.slice(botPrefix.length).trim().split(',');
   const userCommandEntry = context.args.shift();

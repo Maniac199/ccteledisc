@@ -1,7 +1,8 @@
 const createOnReadyHandler = (context) => () => {
   const {client, configuration, logger, database} = context;
+  const { botLogsChannelName, botPrefix } = configuration;
 
-  logger.info(`Logged in as ${client.user.tag}!`);
+  logger.info(`Logged in as ${client.user.tag} and using prefix ` + botPrefix);
 
 };
 /* const mysql = require('mysql');
