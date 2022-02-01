@@ -8,6 +8,7 @@ const addRole = (context) => {
     return;
   }
   message.reply('hello ' + message.author.id);
+  logger.info(`sending hellot to ${message.author.id}!`);
 };
 
 module.exports = addRole;

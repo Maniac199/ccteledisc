@@ -1,4 +1,10 @@
-const mysql = require('mysql');
+const createOnReadyHandler = (context) => () => {
+  const {client, configuration, logger, database} = context;
+
+  logger.info(`Logged in as ${client.user.tag}!`);
+
+};
+/* const mysql = require('mysql');
 
 const createOnReadyHandler = (context) => () => {
   const { client, configuration, logger, database } = context;
@@ -29,5 +35,5 @@ const createOnReadyHandler = (context) => () => {
 
   client.user.setActivity('role changes. $help', { type: 'WATCHING' });
 };
-
+*/
 module.exports = createOnReadyHandler;
