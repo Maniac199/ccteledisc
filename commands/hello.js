@@ -12,4 +12,4 @@ const addRole = (context) => {
   logger.info(`sending hello to ${message.author.id}!`);
 };
 
-module.exports = addRole;
+module.exports = hello;
