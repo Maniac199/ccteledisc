@@ -1,7 +1,7 @@
 const commandList = require('../command-list');
 
 const createMessageHandler = (context) => (message) => {
-  const { configuration, logger } = context;
+  const { configuration } = context;
   const { content, author, channel } = message;
   const { botLogsChannelName, botPrefix } = configuration;
 
@@ -10,11 +10,12 @@ const createMessageHandler = (context) => (message) => {
   // bot channel.
   if (
     !content.startsWith(botPrefix) ||
-    author.bot
+    author.bot ||
+    channel.name !== botLogsChannelName
   ) {
     return;
   }
-logger.info('message:' + message);
+
   context.message = message;
   context.args = message.content.slice(botPrefix.length).trim().split(',');
   const userCommandEntry = context.args.shift();
