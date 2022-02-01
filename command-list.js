@@ -1,4 +1,5 @@
 const addRole = require('./commands/add-role');
+const hello = require('./commands/hello');
 
 
 
