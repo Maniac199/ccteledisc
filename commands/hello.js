@@ -1,5 +1,5 @@
 
-const addRole = (context) => {
+const hello = (context) => {
   const { message, configuration, logger } = context;
   const { mainServerID, botLogsChannel } = configuration;
   const { guild, channel } = message;
