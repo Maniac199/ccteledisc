@@ -3,17 +3,17 @@ const mysql = require('mysql');
 module.exports = (configuration) => {
   const billingDB = mysql.createPool({
     connectionLimit: 10,
-    host: configuration.databaseHost,
-    user: configuration.databaseUser,
-    password: configuration.databasePassword,
-    database: configuration.databaseName,
+    host: configuration.billingDatabaseHost,
+    user: configuration.billingDatabaseUser,
+    password: configuration.billingDatabasePassword,
+    database: configuration.billingDatabaseName,
   });
   const botDB = mysql.createPool({
     connectionLimit: 10,
-    host: configuration.databaseHost,
-    user: configuration.databaseUser,
-    password: configuration.databasePassword,
-    database: configuration.databaseName,
+    host: configuration.botDatabaseHost,
+    user: configuration.botDatabaseUser,
+    password: configuration.botDatabasePassword,
+    database: configuration.botDatabaseName,
   });
   return {billingDB, botDB};
 };
