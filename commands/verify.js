@@ -17,6 +17,7 @@ const verify = (context) => {
                 'discord',
                 message.author
             ]);
+        console.log(valSub);
         con.query(valSub, (err, subResults) => {
             if (err) {
                 throw (err);
