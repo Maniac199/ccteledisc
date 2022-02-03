@@ -1,12 +1,9 @@
 const hello = require('./commands/hello');
 const verify = require('./commands/verify');
+const onetime = require('./commands/onetime');
 
 
 const commandList = [
-  /*{
-    name: 'addRole',
-    execute: addRole,
-  }*/
   {
     name: 'hello',
     execute: hello,
@@ -14,6 +11,10 @@ const commandList = [
   {
     name: 'verify',
     execute: verify,
+  },
+  {
+    name: 'onetime',
+    execute: onetime,
   }
 ];
 
