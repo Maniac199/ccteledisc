@@ -7,7 +7,8 @@ const verify = (context) => {
   if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
     return;
   }
-  message.reply('Hi ' + message.author.name + ', I can help verify your Premium status. Please enter the email address used in the order');
+  message.reply(message.author.name + ' I will continue the verification process via PM!');
+  message.author.send('Please enter your email address that you registered with.');
 };
 
 module.exports = verify;
