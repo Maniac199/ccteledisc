@@ -7,7 +7,7 @@ const hello = (context) => {
   if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
     return;
   }
-  message.reply('hello ' +  message.author.tag + '\nServerID: ' + guild.id + '\nThis Channel ID: ' + channel.id);
+  message.reply('Hello ' +  message.author.tag + '\nServerID: ' + guild.id + '\nThis Channel ID: ' + channel.id);
 
   logger.info(`sending hello to ${message.author.id}!`);
 };
