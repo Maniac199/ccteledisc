@@ -10,7 +10,7 @@ const verify = (context) => {
     }
 
     database.getConnection((err, con) => {
-        let valSub = mysql.format("SELECT * " +
+        /*let valSub = mysql.format("SELECT * " +
             "FROM pxg_wc_customer_lookup " +
             "LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id " +
             "LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id " +
@@ -28,7 +28,8 @@ const verify = (context) => {
                 '_order_id',
                 'discord',
                 message.author
-            ]);
+            ]);*/
+        let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LIMIT 1");
         con.query(valSub, (err, subResults) => {
             if (err) {
                 throw (err);
