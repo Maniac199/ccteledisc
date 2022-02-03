@@ -15,7 +15,7 @@ const verify = (context) => {
                 '_subscription_id',
                 '_order_id',
                 'discord',
-                message.author
+                message.author.tag
             ]);
         console.log(valSub);
         con.query(valSub, (err, subResults) => {
