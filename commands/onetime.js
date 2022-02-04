@@ -25,7 +25,7 @@ const onetime =(context) => {
                     'discord',
                     i
                 ]);
-            con.query(valSub, async (err, subResults) => {
+            con.query(valSub, (err, subResults) => {
                 if (err) {
                     throw (err);
                 }
