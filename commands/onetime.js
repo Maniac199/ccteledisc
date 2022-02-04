@@ -17,7 +17,7 @@ const onetime = (context) => {
             let theMembers = theGuild.members.cache;
             let membersArray = [];
             for await (let m of theMembers) {
-                let theMem = m.fetch(m.id);
+                let theMem = client.users.cache.find(mid => mid.id === m.id);
                 console.log(theMem.tag);
 
             }
