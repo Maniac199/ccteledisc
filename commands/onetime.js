@@ -27,7 +27,7 @@ const onetime = (context) => {
                     'discord',
                     membersArray[i]
                 ]);
-            con.query(valSub, async (err, subResults) => {
+            await con.query(valSub, async (err, subResults) => {
                 if (err) {
                     throw (err);
                 }
