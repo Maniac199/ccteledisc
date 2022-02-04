@@ -10,14 +10,10 @@ const onetime = async (context) => {
         return;
     }
 
-    await billingDB.getConnection(async (err, con) => {
-
-
+    const db = await billingDB.getConnection(async (err, con) => {
         let membersArray = [];
         await memberList(membersArray, mainServerID, client);
 
-
-        console.log('membersArray size: ' + membersArray.length);
         message.reply('Found ' + membersArray.length + ' members in the server.');
         for await (let i of membersArray) {
             let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND meta_value = ?",
@@ -45,7 +41,9 @@ const onetime = async (context) => {
         con.release();
 
     });
-    message.reply('validated ' + validated + ' members, ' + invalid + ' not validated');
+    if(db) {
+        message.reply('validated ' + validated + ' members, ' + invalid + ' not validated');
+    }
 }
 
 const memberList = (memArray, mainServerID, client) => {
