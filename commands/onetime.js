@@ -10,8 +10,9 @@ const onetime = async (context) => {
         return;
     }
 
-    const db = await billingDB.getConnection(async (err, con) => {
+    validated = await billingDB.getConnection(async (err, con) => {
         let membersArray = [];
+        let counter = 0;
         await memberList(membersArray, mainServerID, client);
 
         message.reply('Found ' + membersArray.length + ' members in the server.');
@@ -28,22 +29,17 @@ const onetime = async (context) => {
                     throw (err);
                 }
                 if (subResults.length > 0) {
-                    validated++;
+                    counter++;
                     console.log('validated ' + i);
                 }
-                else {
-                    invalid++;
-                    //console.log('not valid ' + membersArray[i]);
-                }
+
             });
         }
 
         con.release();
-
+        return counter;
     });
-    if(db) {
-        message.reply('validated ' + validated + ' members, ' + invalid + ' not validated');
-    }
+    message.reply('validated ' + validated + ' members');
 }
 
 const memberList = (memArray, mainServerID, client) => {
