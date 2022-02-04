@@ -18,9 +18,9 @@ const onetime = (context) => {
             let membersArray = [];
             let looper = 0;
             for await (let m of theMembers) {
-                let theMem = client.users.cache.find(mid => mid.id === m.user.id);
+                //let theMem = client.users.cache.find(mid => mid.id === m.user.id);
                 if(looper === 0) {
-                    console.log(theMem);
+                    console.log(m);
                     looper++;
                 }
 
