@@ -5,14 +5,29 @@ const onetime = async (context) => {
     const {mainServerID, botLogsChannel} = configuration;
     const {guild, channel} = message;
     let validated = 0;
-    let invalid = 0;
+    //let invalid = 0;
     if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
         return;
     }
 
-    validated = await billingDB.getConnection(async (err, con) => {
+    [validated] = await Promise.all([getValidMem(billingDB, client, mainServerID, message)]);
+    message.reply('validated ' + validated + ' members');
+}
+
+const memberList = (memArray, mainServerID, client) => {
+    let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
+    let theMembers = theGuild.members.cache;
+    theMembers.forEach(mem => {
+        memArray.push(mem.user.tag);
+    });
+    return memArray;
+}
+
+const getValidMem = (billingDB, client, mainServerID, message) => {
+    let counter = 0;
+    billingDB.getConnection(async (err, con) => {
         let membersArray = [];
-        let counter = 0;
+
         await memberList(membersArray, mainServerID, client);
 
         message.reply('Found ' + membersArray.length + ' members in the server.');
@@ -37,18 +52,8 @@ const onetime = async (context) => {
         }
 
         con.release();
-        return counter;
     });
-    message.reply('validated ' + validated + ' members');
-}
-
-const memberList = (memArray, mainServerID, client) => {
-    let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
-    let theMembers = theGuild.members.cache;
-    theMembers.forEach(mem => {
-        memArray.push(mem.user.tag);
-    });
-    return memArray;
+    return counter;
 }
 
 module.exports = onetime;
