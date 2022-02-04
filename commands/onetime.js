@@ -27,6 +27,7 @@ const onetime = (context) => {
                         'discord',
                         membersArray[i]
                     ]);
+                console.log('MYSQL QUERY: ' +valSub);
                 con.query(valSub, async (err, subResults) => {
                     if (err) {
                         throw (err);
