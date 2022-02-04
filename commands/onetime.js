@@ -27,7 +27,6 @@ const onetime = (context) => {
                     'discord',
                     membersArray[i]
                 ]);
-            console.log('MYSQL QUERY: ' +valSub);
             con.query(valSub, async (err, subResults) => {
                 if (err) {
                     throw (err);
@@ -52,7 +51,7 @@ const memberList = (memArray, mainServerID, client) => {
     let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
     let theMembers = theGuild.members.cache;
     theMembers.forEach(mem => {
-        memArray.push(mem.id);
+        memArray.push(mem.user.tag);
     });
     return memArray;
 }
