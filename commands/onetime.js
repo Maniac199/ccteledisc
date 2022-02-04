@@ -43,7 +43,7 @@ const onetime = (context) => {
         }
 
         con.release();
-        message.reply('validated ' + validated + ' members, ' + invalid + ' not validated');
+        await message.reply('validated ' + validated + ' members, ' + invalid + ' not validated');
     });
 }
 
