@@ -17,8 +17,9 @@ const onetime = (context) => {
             let theMembers = theGuild.members.cache;
             let membersArray = [];
             for await (let m of theMembers) {
-                console.log(m);
-                //membersArray.push(m.user.tag);
+                let theMem = m.fetch(m.id);
+                console.log(theMem.tag);
+
             }
             console.log('membersArray size: ' + membersArray.length);
             message.reply('Found ' + membersArray.length + ' members in the server.');
