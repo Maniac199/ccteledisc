@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-const onetime = (context) => {
+const onetime = async (context) => {
     const {client, message, configuration, billingDB} = context;
     const {mainServerID, botLogsChannel} = configuration;
     const {guild, channel} = message;
@@ -9,7 +9,7 @@ const onetime = (context) => {
         return;
     }
 
-    billingDB.getConnection(async (err, con) => {
+    await billingDB.getConnection(async (err, con) => {
         let validated = 0;
         let invalid = 0;
 
@@ -43,8 +43,9 @@ const onetime = (context) => {
         }
 
         con.release();
-        await message.reply('validated ' + validated + ' members, ' + invalid + ' not validated');
+
     });
+    message.reply('validated ' + validated + ' members, ' + invalid + ' not validated');
 }
 
 const memberList = (memArray, mainServerID, client) => {
