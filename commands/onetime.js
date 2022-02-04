@@ -37,7 +37,7 @@ const onetime = (context) => {
                 }
                 else {
                     invalid++;
-                    console.log('not valid ' + membersArray[i]);
+                    //console.log('not valid ' + membersArray[i]);
                 }
             });
         }
