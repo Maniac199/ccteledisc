@@ -16,9 +16,13 @@ const onetime = (context) => {
         if(theGuild) {
             let theMembers = theGuild.members.cache;
             let membersArray = [];
+            let looper = 0;
             for await (let m of theMembers) {
-                let theMem = client.users.cache.find(mid => mid.id === m.id);
-                console.log(theMem.tag);
+                let theMem = client.users.cache.find(mid => mid.id === m.user.id);
+                if(looper === 0) {
+                    console.log(theMem);
+                    looper++;
+                }
 
             }
             console.log('membersArray size: ' + membersArray.length);
