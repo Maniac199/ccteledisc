@@ -4,14 +4,14 @@ const onetime = async (context) => {
     const {client, message, configuration, billingDB} = context;
     const {mainServerID, botLogsChannel} = configuration;
     const {guild, channel} = message;
-
+    let validated = 0;
+    let invalid = 0;
     if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
         return;
     }
 
     await billingDB.getConnection(async (err, con) => {
-        let validated = 0;
-        let invalid = 0;
+
 
         let membersArray = [];
         await memberList(membersArray, mainServerID, client);
