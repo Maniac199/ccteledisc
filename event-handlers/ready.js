@@ -2,6 +2,7 @@ const mysql = require('mysql');
 
 const createOnReadyHandler = (context) => () => {
   const { client, configuration, logger, billingDB, botDB } = context;
+  const {mainServerID, botLogsChannel} = configuration;
 
   logger.info(`Logged in as ${client.user.tag}!`);
 
@@ -12,7 +13,7 @@ const createOnReadyHandler = (context) => () => {
     );
 
   const checkQuery = mysql.format('SELECT 1+1 AS result');
-/*
+
   billingDB.getConnection((err, con) => {
     if (err) {
       logger.error(`Unable to connect to database: ${err.message}`);
@@ -39,7 +40,7 @@ const createOnReadyHandler = (context) => () => {
       });
     }
   });
-*/
+
   //client.user.setActivity(' | $verify', { type: 'WATCHING' });
 };
 
