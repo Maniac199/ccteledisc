@@ -31,7 +31,7 @@ const onetime =(context) => {
                 if (err) {
                     throw (err);
                 }
-                if (subResults.length > 0 && tester === 0) {
+                if (subResults.length > 0 && tester < 2) {
                     console.log('validated ' + i);
                     let theMem = theGuild.members.cache.find(m => m.tag = i);
                     if(botCache.indexOf(theMem.id) > 0) {
