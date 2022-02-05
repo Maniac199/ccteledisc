@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-const onetime =(context) => {
+const onetime = async (context) => {
     const {client, message, configuration, billingDB, botDB, botCache} = context;
     const {mainServerID, botLogsChannel} = configuration;
     const {guild, channel} = message;
@@ -8,17 +8,18 @@ const onetime =(context) => {
         return;
     }
     let validated = 0;
-    billingDB.getConnection((err, con) => {
+    billingDB.getConnection(async(err, con) => {
         message.reply('bot cache: ' + botCache.length);
         let membersArray = [];
 
         let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
         let theMembers = theGuild.members.cache;
-        theMembers.forEach(mem => {
-            membersArray.push(mem.user.tag);
-        });
+        for await (let tm of theMembers) {
+            membersArray.push(tm.user.tag);
+        }
+
         message.reply('Found ' + membersArray.length + ' members in the server.');
-        for (let i of membersArray) {
+        for await (let i of membersArray) {
             let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND meta_value = ?",
                 [
                     '_subscription_id',
@@ -39,10 +40,10 @@ const onetime =(context) => {
                     }
                     else {
                         console.log(subResults[0].order_id);
-                        botDB.getConnection((err, botcon) => {
+                        botDB.getConnection(async (err, botcon) => {
                             let botIns = mysql.format('INSERT INTO discord (discord_tag, discord_id, order_id) VALUES (?, ?, ?)',
                                 [
-                                    i,
+                                    theMem.user.tag,
                                     theMem.id,
                                     subResults[0].order_id
                                 ]);
