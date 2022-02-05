@@ -27,7 +27,7 @@ const createOnReadyHandler = (context) => () => {
       });
     }
   });
-  botDB.getConnection((err, con) => {
+  /*botDB.getConnection((err, con) => {
     if (err) {
       logger.error(`Unable to connect to database: ${err.message}`);
     } else {
@@ -40,7 +40,7 @@ const createOnReadyHandler = (context) => () => {
       });
     }
   });
-
+*/
   //client.user.setActivity(' | $verify', { type: 'WATCHING' });
 };
 
