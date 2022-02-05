@@ -1,8 +1,8 @@
 const mysql = require('mysql');
 
 const onetime =(context) => {
-    const {client, message, configuration, billingDB} = context;
-    const {mainServerID, botLogsChannel} = configuration;
+    const {client, message, configuration} = context;
+    const {mainServerID, botLogsChannel, billingDB} = configuration;
     const {guild, channel} = message;
     if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
         return;
