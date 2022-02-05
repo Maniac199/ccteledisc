@@ -17,13 +17,14 @@ const client = new Discord.Client({
 // Get a database object
 const billingDB = createDatabase(configuration).billingDB;
 const botDB = createDatabase(configuration).botDB;
-
+const botCache = [];
 // Create the context
 const context = {
   client,
   logger,
   billingDB,
   botDB,
+  botCache,
   configuration,
   logChannel: '', // There's better ways of doing this but this won't hurt in a small app like this
   reportChannel: '',

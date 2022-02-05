@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 const onetime =(context) => {
-    const {client, message, configuration, billingDB} = context;
+    const {client, message, configuration, billingDB, botCache} = context;
     const {mainServerID, botLogsChannel} = configuration;
     const {guild, channel} = message;
     if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
@@ -9,6 +9,7 @@ const onetime =(context) => {
     }
     let validated = 0;
     billingDB.getConnection((err, con) => {
+        console.log('bot cache: ' + botCache.length);
         let membersArray = [];
 
         let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
@@ -25,12 +26,20 @@ const onetime =(context) => {
                     'discord',
                     i
                 ]);
+            let tester = 0;
             con.query(valSub, (err, subResults) => {
                 if (err) {
                     throw (err);
                 }
-                if (subResults.length > 0) {
+                if (subResults.length > 0 && tester === 0) {
                     console.log('validated ' + i);
+                    if(botCache.indexOf(i)) {
+                        console.log('Found in botCache, moving to next');
+                    }
+                    else {
+                        console.log(subResults);
+                        tester++;
+                    }
                 }
 
             });

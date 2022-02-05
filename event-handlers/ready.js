@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 const createOnReadyHandler = (context) => () => {
-  const { client, configuration, logger, billingDB, botDB } = context;
+  const { client, configuration, logger, billingDB, botDB, botCache } = context;
 
   logger.info(`Logged in as ${client.user.tag}!`);
 
@@ -25,6 +25,7 @@ const createOnReadyHandler = (context) => () => {
         }
       });
     }
+    con.release();
   });
   botDB.getConnection((err, con) => {
     if (err) {
@@ -35,9 +36,18 @@ const createOnReadyHandler = (context) => () => {
           logger.error(`Error querying bot database: ${err.message}`);
         } else if(result){
           logger.info(`Successfully connected to bot database`);
+          let readyCache = mysql.format('SELECT discord_id FROM discord');
+          con.query(readyCache, (err, res) => {
+            if(res.length > 0) {
+              for(let i of res) {
+                botCache.push(i.discord_id);
+              }
+            }
+          });
         }
       });
     }
+    con.release();
   });
 
   //client.user.setActivity(' | $verify', { type: 'WATCHING' });
