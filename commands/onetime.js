@@ -43,7 +43,7 @@ const onetime = async (context) => {
                         botDB.getConnection(async (err, botcon) => {
                             let botIns = mysql.format('INSERT INTO discord (discord_tag, discord_id, order_id) VALUES (?, ?, ?)',
                                 [
-                                    theMem.user.tag,
+                                    i,
                                     theMem.id,
                                     subResults[0].order_id
                                 ]);
