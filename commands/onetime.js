@@ -48,13 +48,14 @@ const onetime = async (context) => {
                                     console.log(mem.id + ' added to bot database');
                                 }
                             })
+                            botcon.release();
                         });
                     }
                 }
             });
         });
         con.release();
-        botcon.release();
+
     });
 }
 
