@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 const onetime =(context) => {
-    const {client, message, configuration, billingDB, botCache} = context;
+    const {client, message, configuration, billingDB, botDB, botCache} = context;
     const {mainServerID, botLogsChannel} = configuration;
     const {guild, channel} = message;
     if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
@@ -9,7 +9,7 @@ const onetime =(context) => {
     }
     let validated = 0;
     billingDB.getConnection((err, con) => {
-        console.log('bot cache: ' + botCache.length);
+        message.reply('bot cache: ' + botCache.length);
         let membersArray = [];
 
         let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
@@ -26,12 +26,12 @@ const onetime =(context) => {
                     'discord',
                     i
                 ]);
-            let tester = 0;
+
             con.query(valSub, (err, subResults) => {
                 if (err) {
                     throw (err);
                 }
-                if (subResults.length > 0 && tester < 2) {
+                if (subResults.length > 0) {
                     console.log('validated ' + i);
                     let theMem = theGuild.members.cache.find(m => m.tag = i);
                     if(botCache.indexOf(theMem.id) > 0) {
@@ -39,7 +39,24 @@ const onetime =(context) => {
                     }
                     else {
                         console.log(subResults[0].order_id);
-                        tester++;
+                        botDB.getConnection((err, botcon) => {
+                            let botIns = mysql.format('INSERT INTO discord (discord_tag, discord_id, order_id) VALUES (?, ?, ?)',
+                                [
+                                    i,
+                                    theMem.id,
+                                    subResults[0].order_id
+                                ]);
+                            botcon.query(botIns, (err, r) => {
+                                if(err) {
+                                    throw (err);
+                                }
+                                else {
+                                    botCache.push(theMem.id);
+                                    console.log(i + ' added to bot database');
+                                }
+                            })
+                        });
+
                     }
                 }
 
