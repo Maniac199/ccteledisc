@@ -2,7 +2,6 @@ const mysql = require('mysql');
 
 const createOnReadyHandler = (context) => () => {
   const { client, configuration, logger, billingDB, botDB } = context;
-  const {mainServerID, botLogsChannel} = configuration;
 
   logger.info(`Logged in as ${client.user.tag}!`);
 
@@ -16,31 +15,31 @@ const createOnReadyHandler = (context) => () => {
 
   billingDB.getConnection((err, con) => {
     if (err) {
-      logger.error(`Unable to connect to database: ${err.message}`);
+      logger.error(`Unable to connect to billing database: ${err.message}`);
     } else {
       con.query(checkQuery, (err, result) => {
         if (err) {
-          logger.error(`Error querying database: ${err.message}`);
-        } else {
-          logger.info(`Successfully connected to database`);
+          logger.error(`Error querying billing database: ${err.message}`);
+        } else if(result) {
+          logger.info(`Successfully connected to billing database`);
         }
       });
     }
   });
-  /*botDB.getConnection((err, con) => {
+  botDB.getConnection((err, con) => {
     if (err) {
-      logger.error(`Unable to connect to database: ${err.message}`);
+      logger.error(`Unable to connect to bot database: ${err.message}`);
     } else {
       con.query(checkQuery, (err, result) => {
         if (err) {
-          logger.error(`Error querying database: ${err.message}`);
-        } else {
-          logger.info(`Successfully connected to database`);
+          logger.error(`Error querying bot database: ${err.message}`);
+        } else if(result){
+          logger.info(`Successfully connected to bot database`);
         }
       });
     }
   });
-*/
+
   //client.user.setActivity(' | $verify', { type: 'WATCHING' });
 };
 

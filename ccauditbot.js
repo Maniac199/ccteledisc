@@ -3,8 +3,8 @@ const configuration = require('./configuration');
 const createDatabase = require('./database');
 const createLogger = require('./logger');
 const createOnReadyHandler = require('./event-handlers/ready');
-const createGuildMemberAddHandler = require('./event-handlers/guild-member-add');
-const createGuildMemberUpdateHandler = require('./event-handlers/guild-member-update');
+//const createGuildMemberAddHandler = require('./event-handlers/guild-member-add');
+//const createGuildMemberUpdateHandler = require('./event-handlers/guild-member-update');
 const createMessageHandler = require('./event-handlers/message');
 
 const logger = createLogger(configuration);
@@ -16,12 +16,14 @@ const client = new Discord.Client({
 
 // Get a database object
 const billingDB = createDatabase(configuration).billingDB;
+const botDB = createDatabase(configuration).botDB;
 
 // Create the context
 const context = {
   client,
   logger,
   billingDB,
+  botDB,
   configuration,
   logChannel: '', // There's better ways of doing this but this won't hurt in a small app like this
   reportChannel: '',
@@ -29,8 +31,8 @@ const context = {
 
 // Create Handlers
 const onReadyHandler = createOnReadyHandler(context);
-const onGuildMemberAddHandler = createGuildMemberAddHandler(context);
-const onGuildMemberUpdateHandler = createGuildMemberUpdateHandler(context);
+//const onGuildMemberAddHandler = createGuildMemberAddHandler(context);
+//const onGuildMemberUpdateHandler = createGuildMemberUpdateHandler(context);
 const onMessageHandler = createMessageHandler(context);
 
 // Setup handlers
