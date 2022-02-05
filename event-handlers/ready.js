@@ -52,6 +52,7 @@ const createOnReadyHandler = (context) => () => {
       });
     }
     con.release();
+
   });
 
   //client.user.setActivity(' | $verify', { type: 'WATCHING' });
