@@ -5,7 +5,7 @@ const verify = (context) => {
     const { mainServerID, botLogsChannel } = configuration;
     const { guild, channel } = message;
 
-    if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
+    if ((guild.id !== mainServerID && guild.id) || (channel.id !== botLogsChannel && guild.id)) {
         return;
     }
     if(botCache.indexOf(message.author.id) > 0) {

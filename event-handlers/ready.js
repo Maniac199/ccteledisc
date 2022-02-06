@@ -41,11 +41,9 @@ const createOnReadyHandler = (context) => () => {
             if(res.length > 0) {
               for(let i of res) {
                 botCache.push(i.discord_id);
-                console.log(i.discord_id + ' added to botCache');
               }
             }
             else {
-              console.log('botCache is empty');
             }
           });
         }
