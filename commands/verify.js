@@ -6,6 +6,7 @@ const verify = (context) => {
     const { guild, channel } = message;
 
     if ((guild.id !== mainServerID && message.channel.type !== 'dm') || (channel.id !== botLogsChannel && message.channel.type !== 'dm')) {
+        console.log(message);
         return;
     }
     if(message.channel.type === 'dm') {
