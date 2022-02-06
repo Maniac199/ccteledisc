@@ -1,8 +1,8 @@
 const mysql = require('mysql');
 
 const verify = (context) => {
-    const { message, configuration, billingDB, botDB, botCache, args, ccpRoleID } = context;
-    const { mainServerID, botLogsChannel } = configuration;
+    const { message, configuration, billingDB, botDB, botCache, args} = context;
+    const { mainServerID, botLogsChannel, ccpRoleID} = configuration;
     const { guild, channel } = message;
     let testmode = false;
     let ccpRole = guild.roles.cache.find(r => r.id === ccpRoleID);
