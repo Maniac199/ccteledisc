@@ -5,8 +5,11 @@ const verify = (context) => {
     const { mainServerID, botLogsChannel } = configuration;
     const { guild, channel } = message;
 
-    if ((guild.id !== mainServerID && guild.id) || (channel.id !== botLogsChannel && guild.id)) {
+    if ((guild.id !== mainServerID && message.guild !== null) || (channel.id !== botLogsChannel && message.guild !== null)) {
         return;
+    }
+    if(message.guild == null) {
+        console.log(message);
     }
     if(botCache.indexOf(message.author.id) > 0) {
         message.reply('Already verified.');
