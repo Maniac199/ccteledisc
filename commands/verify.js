@@ -6,7 +6,7 @@ const verify = (context) => {
     const { guild, channel } = message;
     let testmode = false;
     let ccpRole = guild.roles.cache.find(r => r.id === ccpRoleID);
-    console.log(guild.roles.cache);
+    console.log(ccpRoleID);
     let theMem = guild.members.cache.find(m => m.id === message.author.id);
     if(guild) {
         if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
