@@ -11,7 +11,7 @@ const createMessageHandler = (context) => (message) => {
   if (
     !content.startsWith(botPrefix) ||
     author.bot ||
-    channel.name !== botLogsChannelName
+      (channel.name !== botLogsChannelName && channel.type !== 'dm')
   ) {
     return;
   }
