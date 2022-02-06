@@ -67,8 +67,8 @@ const verify = (context) => {
                                             throw (err);
                                         }
                                         else {
-                                            botCache.push(mem.id);
-                                            console.log(mem.id + ' added to bot database');
+                                            botCache.push(theMem.id);
+                                            console.log(theMem.id + ' added to bot database');
                                         }
                                     });
                                     botcon.release();
