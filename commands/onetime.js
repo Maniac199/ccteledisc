@@ -47,7 +47,7 @@ const onetime = async (context) => {
                                     botCache.push(mem.id);
                                     console.log(mem.id + ' added to bot database');
                                 }
-                            })
+                            });
                             botcon.release();
                         });
                     }

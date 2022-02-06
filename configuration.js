@@ -8,6 +8,7 @@ const configuration = {
   mainServerID: process.env.MAIN_SERVER_ID,
   botLogsChannel: process.env.BOT_LOGS_CHANNEL,
   botLogsChannelName: process.env.BOT_LOGS_CHANNEL_NAME,
+  ccpRoleID: process.env.CCP_ROLE_ID,
   botToken: process.env.BOT_TOKEN,
   billingDatabaseHost: process.env.BILLING_DATABASE_HOST,
   billingDatabaseUser: process.env.BILLING_DATABASE_USERNAME,
