@@ -1,17 +1,21 @@
 const mysql = require('mysql');
 
 const verify = (context) => {
-    const { message, configuration, billingDB, botDB, botCache } = context;
+    const { message, configuration, billingDB, botDB, botCache, args } = context;
     const { mainServerID, botLogsChannel } = configuration;
     const { guild, channel } = message;
+    let testmode = false;
     if(guild) {
         if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
             console.log(message);
             return;
         }
     }
-    if(message.channel.type === 'dm') {
-        console.log('dm');
+    if(args[0]) {
+        if(args[0] === 'test') {
+            testmode = true;
+            message.reply('Proceeding in test mode');
+        }
     }
     if(botCache.indexOf(message.author.id) > 0) {
         message.reply('Already verified.');
@@ -29,7 +33,7 @@ const verify = (context) => {
                 if (err) {
                     throw (err);
                 }
-                if (subResults.length > 0) {
+                if (subResults.length > 0 && !testmode) {
                     message.reply(message.author.username + ' You have been verified, granting access!');
                 } else {
                     message.reply(message.author.username + ' I will continue the verification process via PM!');
