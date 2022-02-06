@@ -4,10 +4,11 @@ const verify = (context) => {
     const { message, configuration, billingDB, botDB, botCache } = context;
     const { mainServerID, botLogsChannel } = configuration;
     const { guild, channel } = message;
-
-    if ((guild.id !== mainServerID && message.channel.type !== 'dm') || (channel.id !== botLogsChannel && message.channel.type !== 'dm')) {
-        console.log(message);
-        return;
+    if(guild) {
+        if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
+            console.log(message);
+            return;
+        }
     }
     if(message.channel.type === 'dm') {
         console.log('dm');
