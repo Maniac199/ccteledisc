@@ -58,7 +58,7 @@ const verify = (context) => {
                                 botDB.getConnection(async (err, botcon) => {
                                     let botIns = mysql.format('INSERT INTO discord (discord_tag, discord_id, order_id) VALUES (?, ?, ?)',
                                         [
-                                            theMem.user.id,
+                                            theMem.user.tag,
                                             theMem.id,
                                             subResults[0].orderID
                                         ]);
