@@ -60,7 +60,7 @@ const verify = (context) => {
                                         [
                                             theMem.user.tag,
                                             theMem.id,
-                                            subResults[0].orderID
+                                            subResults[0].order_id
                                         ]);
                                     botcon.query(botIns, (err, r) => {
                                         if(err) {
