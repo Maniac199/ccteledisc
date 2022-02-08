@@ -5,6 +5,7 @@ const verify = (context) => {
     const { mainServerID, botLogsChannel, ccpRoleID} = configuration;
     const { guild, channel } = message;
     let testmode = false;
+    let lookup = false;
     let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
     let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
     let theMem = theGuild.members.cache.find(m => m.id === message.author.id);
@@ -18,11 +19,16 @@ const verify = (context) => {
             testmode = true;
             message.reply('Proceeding in test mode');
         }
+        else if(args.length === 3 && args[0] === 'lookup') {
+            lookup = true;
+            let email = args[1];
+            let zip = args[2];
+        }
     }
     if(botCache.indexOf(message.author.id) > 0) {
         message.reply('Already verified.');
     }
-    else {
+    else if (!lookup){
         billingDB.getConnection((err, con) => {
             let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND meta_value = ?",
                 [
@@ -78,11 +84,21 @@ const verify = (context) => {
                     }
                 } else {
                     message.reply(message.author.username + ' I will continue the verification process via PM!');
-                    message.author.send('Please respond with: $verify email postcode/zipcode. For example:\n$verify billing@cryptocache.tech 12345');
+                    message.author.send('Please respond with: $verify lookup email postcode/zipcode. For example:\n$verify lookup billing@cryptocache.tech 12345');
                 }
             });
             con.release();
         });
+    }
+    else if(lookup) {
+        message.reply('Standby, looking up the information provided.');
+        let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND meta_value = ?",
+            [
+                '_subscription_id',
+                '_order_id',
+                'discord',
+                theMem.user.tag
+            ]);
     }
 };
 
