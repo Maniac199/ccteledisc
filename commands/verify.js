@@ -5,9 +5,10 @@ const verify = (context) => {
     const { mainServerID, botLogsChannel, ccpRoleID} = configuration;
     const { guild, channel } = message;
     let testmode = false;
-    let ccpRole = client.guild.roles.cache.find(r => r.id === ccpRoleID);
+    let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
+    let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
     console.log(ccpRoleID);
-    let theMem = client.guild.members.cache.find(m => m.id === message.author.id);
+    let theMem = theGuild.members.cache.find(m => m.id === message.author.id);
     if(guild) {
         if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
             console.log(message);
