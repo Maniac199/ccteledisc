@@ -7,11 +7,9 @@ const verify = (context) => {
     let testmode = false;
     let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
     let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
-    console.log(ccpRoleID);
     let theMem = theGuild.members.cache.find(m => m.id === message.author.id);
     if(guild) {
         if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
-            console.log(message);
             return;
         }
     }
@@ -69,7 +67,6 @@ const verify = (context) => {
                                         }
                                         else {
                                             botCache.push(theMem.id);
-                                            console.log(theMem.id + ' added to bot database');
                                         }
                                     });
                                     botcon.release();
