@@ -78,7 +78,7 @@ const verify = (context) => {
                     }
                 } else {
                     message.reply(message.author.username + ' I will continue the verification process via PM!');
-                    message.author.send('Please enter your email address that you registered with.');
+                    message.author.send('Please respond with: $verify email postcode/zipcode. For example:\n$verify billing@cryptocache.tech 12345');
                 }
             });
             con.release();
