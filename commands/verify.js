@@ -1,13 +1,13 @@
 const mysql = require('mysql');
 
 const verify = (context) => {
-    const { message, configuration, billingDB, botDB, botCache, args} = context;
+    const { message, configuration, billingDB, botDB, botCache, args, client} = context;
     const { mainServerID, botLogsChannel, ccpRoleID} = configuration;
     const { guild, channel } = message;
     let testmode = false;
-    let ccpRole = guild.roles.cache.find(r => r.id === ccpRoleID);
+    let ccpRole = client.guild.roles.cache.find(r => r.id === ccpRoleID);
     console.log(ccpRoleID);
-    let theMem = guild.members.cache.find(m => m.id === message.author.id);
+    let theMem = client.guild.members.cache.find(m => m.id === message.author.id);
     if(guild) {
         if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
             console.log(message);
