@@ -14,6 +14,8 @@ const createMessageHandler = (context) => (message) => {
     author.bot ||
       (channel.name !== botLogsChannelName && channel.type !== 'dm')
   ) {
+    console.log(channel);
+    console.log(message);
     return;
   }
 
