@@ -107,7 +107,25 @@ const verify = (context) => {
                     throw (err);
                 }
                 if (subResults.length > 0) {
-                    message.reply('Account located: ' + subResults[0].order_id);
+                    message.reply('Account located, granting access');
+                    theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
+                    botDB.getConnection(async (err, botcon) => {
+                        let botIns = mysql.format('INSERT INTO discord (discord_tag, discord_id, order_id) VALUES (?, ?, ?)',
+                            [
+                                theMem.user.tag,
+                                theMem.id,
+                                subResults[0].order_id
+                            ]);
+                        botcon.query(botIns, (err, r) => {
+                            if(err) {
+                                throw (err);
+                            }
+                            else {
+                                botCache.push(theMem.id);
+                            }
+                        });
+                        botcon.release();
+                    });
                 } else {
                     message.reply('Unable to locate account');
                 }
