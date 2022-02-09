@@ -6,6 +6,7 @@ const verify = (context) => {
     const { guild, channel } = message;
     let testmode = false;
     let lookup = false;
+    let email, zip;
     let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
     let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
     let theMem = theGuild.members.cache.find(m => m.id === message.author.id);
@@ -21,8 +22,8 @@ const verify = (context) => {
         }
         else if(args.length === 3 && args[0] === 'lookup') {
             lookup = true;
-            let email = args[1];
-            let zip = args[2];
+            email = args[1];
+            zip = args[2];
         }
     }
     if(botCache.indexOf(message.author.id) > 0) {
@@ -92,13 +93,26 @@ const verify = (context) => {
     }
     else if(lookup) {
         message.reply('Standby, looking up the information provided.');
-        let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND meta_value = ?",
+        let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND meta_value = ? AND postcode = ?",
             [
                 '_subscription_id',
                 '_order_id',
-                'discord',
-                theMem.user.tag
+                '_billing_email',
+                email,
+                zip
             ]);
+        billingDB.getConnection((err, con) => {
+            con.query(valSub, (err, subResults) => {
+                if (err) {
+                    throw (err);
+                }
+                if (subResults.length > 0) {
+                    message.reply('Account located: ' + subResults[0].order_id);
+                } else {
+                    message.reply('Unable to locate account');
+                }
+            });
+        });
     }
 };
 
