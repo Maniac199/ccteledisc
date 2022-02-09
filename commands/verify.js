@@ -16,7 +16,6 @@ const verify = (context) => {
         }
     }
     if(args[0]) {
-        console.log(args);
         if(args[0] === 'test') {
             testmode = true;
             message.reply('Proceeding in test mode');
@@ -27,7 +26,7 @@ const verify = (context) => {
             zip = args[2];
         }
     }
-    if(botCache.indexOf(message.author.id) > 0) {
+    if(botCache.indexOf(message.author.id) > 0 && !lookup) {
         message.reply('Already verified.');
     }
     else if (!lookup){
