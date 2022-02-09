@@ -14,13 +14,11 @@ const createMessageHandler = (context) => (message) => {
     author.bot ||
       (channel.name !== botLogsChannelName && channel.type !== 'dm')
   ) {
-    console.log(channel);
-    console.log(message);
     return;
   }
 
   context.message = message;
-  context.args = message.content.slice(botPrefix.length).trim().split(',');
+  context.args = message.content.slice(botPrefix.length).trim().split(' ');
   const userCommandEntry = context.args.shift();
 
   const command = commandList.find((cmd) => cmd.name === userCommandEntry);
