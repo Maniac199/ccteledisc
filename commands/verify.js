@@ -16,6 +16,7 @@ const verify = (context) => {
         }
     }
     if(args[0]) {
+        console.log(args);
         if(args[0] === 'test') {
             testmode = true;
             message.reply('Proceeding in test mode');
