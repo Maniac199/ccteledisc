@@ -26,7 +26,7 @@ const verify = (context) => {
             zip = args[2];
         }
     }
-    if(botCache.indexOf(message.author.id) > 0 && !lookup) {
+    if(botCache.indexOf(message.author.id) > 0) {
         message.reply('Already verified.');
     }
     else if (!lookup){
