@@ -14,6 +14,7 @@ const createMessageHandler = (context) => (message) => {
     author.bot ||
       (channel.name !== botLogsChannelName && channel.type !== 'dm' && channel.name !== botListenChannelName)
   ) {
+    console.log('exited from message');
     return;
   }
 

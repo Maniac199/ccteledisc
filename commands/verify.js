@@ -12,6 +12,7 @@ const verify = (context) => {
     let theMem = theGuild.members.cache.find(m => m.id === message.author.id);
     if(guild) {
         if (guild.id !== mainServerID || (channel.id !== botLogsChannel && channel.id !== botListenChannel)) {
+            console.log('exited from verify');
             return;
         }
     }
