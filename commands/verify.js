@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 const verify = (context) => {
     const { message, configuration, billingDB, botDB, botCache, args, client} = context;
-    const { mainServerID, botLogsChannel, ccpRoleID} = configuration;
+    const { mainServerID, botLogsChannel, ccpRoleID, botListenChannel} = configuration;
     const { guild, channel } = message;
     let testmode = false;
     let lookup = false;
@@ -11,7 +11,7 @@ const verify = (context) => {
     let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
     let theMem = theGuild.members.cache.find(m => m.id === message.author.id);
     if(guild) {
-        if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
+        if (guild.id !== mainServerID || (channel.id !== botLogsChannel && channel.id !== botListenChannel)) {
             return;
         }
     }

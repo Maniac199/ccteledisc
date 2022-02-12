@@ -6,6 +6,8 @@ dotenv.config();
 const configuration = {
   botName: process.env.BOT_NAME,
   mainServerID: process.env.MAIN_SERVER_ID,
+  botListenChannel: process.env.BOT_LISTEN_CHANNEL,
+  botListenChannelName: process.env.BOT_LISTEN_CHANNEL_NAME,
   botLogsChannel: process.env.BOT_LOGS_CHANNEL,
   botLogsChannelName: process.env.BOT_LOGS_CHANNEL_NAME,
   ccpRoleID: process.env.CCP_ROLE_ID,
