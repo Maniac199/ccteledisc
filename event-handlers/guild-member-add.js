@@ -1,121 +1,64 @@
 const mysql = require('mysql');
 
 const createGuildMemberAddHandler = (context) => (member) => {
-  const { client, message, configuration, logChannel, database, args } = context;
-  const { mainServerID, botLogsChannel } = configuration;
-  //const { guild, channel } = message;
+    const { client, configuration, botDB, billingDB, botCache } = context;
+    const { mainServerID, botLogsChannel, ccpRoleID } = configuration;
 
-  database.getConnection((err, con) => {
-    var select = mysql.format(
-      'SELECT * FROM approvedServers WHERE type = "internal" AND id = ?',
-      [member.guild.id]
-    );
-
-    con.query(select, (err, internals) => {
-      if (err) {
-        throw err;
-      }
-      if (member.guild.id !== mainServerID && internals.length === 0) {
-        return;
-      }
-      if (member.guild.id === mainServerID) {
-        const selectExternalApprovedServers =
-          'SELECT * FROM approvedServers WHERE type = "external"';
-        con.query(selectExternalApprovedServers, (err, result) => {
-          result.forEach((s) => {
-            let guild = client.guilds.cache.find((guild) => guild.id === s.id);
-            let memberCheck = guild.members.cache.find(
-              (m) => m.id === member.id
-            );
-            if (memberCheck && member.manageable) {
-              if (memberCheck.roles.cache.some((r) => r.id === s.extRoleID)) {
-                let role = member.guild.roles.cache.find(
-                  (r) => r.id === s.roleID
-                );
-                if (role) {
-                  member.roles
-                    .add(role)
-                    .catch((err) => context.logger.error(err.message));
-                  logChannel.send(
-                    member.user.username +
-                      ' granted role ' +
-                      role.name +
-                      ' by ' +
-                      unescape(s.name)
-                  );
-                  const insert = mysql.format(
-                    'INSERT INTO rolesGranted (memberID, rolesyncID) VALUES (?, ?)',
-                    [member.id, s.syncID]
-                  );
-                  con.query(insert, (err, res) => {
-                    if (err) {
-                      throw err;
-                    }
-                  });
-                }
-              }
-            }
-          });
-        });
-      } else {
-        let roleFound = false;
-        internals.forEach((i) => {
-          let guild = client.guilds.cache.find(
-            (g) => g.id === mainServerID
-          );
-          let memberCheck = guild.members.cache.find(
-            (mem) => mem.id === member.id
-          );
-          if (memberCheck) {
-            if (
-              memberCheck.roles.cache.some((r) => r.id === i.roleID) &&
-              member.manageable
-            ) {
-              let role = member.guild.roles.cache.find(
-                (r) => r.id === i.extRoleID
-              );
-              member.roles
-                .add(role)
-                .catch((err) => context.logger.error(err.message));
-              roleFound = true;
-              member.setNickname(memberCheck.nickname);
-              member.guild.channels.cache
-                .find((c) => c.name === 'bot-ops')
-                .send(
-                  member.user.username +
-                    ' granted role ' +
-                    role.name +
-                    ' by ' +
-                    guild.name +
-                    ' and synchronized nickname to main server'
-                );
-              const insertGranteRoles = mysql.format(
-                'INSERT INTO rolesGranted (memberID, rolesyncID) VALUES (?, ?)',
-                [member.id, i.syncID]
-              );
-              con.query(insertGranteRoles, (err, res) => {
-                if (err) {
-                  throw err;
-                }
-              });
-            }
-          }
-        });
-        if(!roleFound && !member.user.bot && member.guild.id === '797212905065938974') {
-          let localLogChannel = member.guild.channels.cache.find(c => c.name === 'bot-ops');
-              if(member.kickable) {
-                member.send('Thank you for your interest in Pantheon Industry Discord. Unfortunately you need to have roles in the Main Pantheon Discord prior to joining the Industrial Discord. Once you are given roles in the Main Pantheon Discord, please feel free to come back over.');
-                member.kick('Does not have any roles');
-                        localLogChannel.send(member.user.username + ' was not matched to any roles and was kicked');
-              }
-              else {
-              localLogChannel.send(member.user.username + ' was not matched to any roles and should be kicked');
-              }
+    let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
+    let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
+    let theMem = theGuild.members.cache.find(m => m.id === member.user.id);
+    billingDB.getConnection((err, con) => {
+        if(botCache.indexOf(member.id) > 0) {
+            verified(theMem, false, member, botDB, botCache, false, ccpRole, context);
+            botLogsChannel.send(member.user.tag + ' was verified via botCache');
         }
-      }
-    });
+        else {
+          let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND meta_value = ?",
+              [
+                '_subscription_id',
+                '_order_id',
+                'discord',
+                member.user.tag
+              ]);
+            con.query(valSub, (err, subResults) => {
+                if (err) {
+                    throw (err);
+                }
+                if (subResults.length > 0) {
+                    verified(theMem, true, member, botDB, botCache, subResults, ccpRole, context);
+                    botLogsChannel.send(member.user.tag + ' was verified via subscription');
+                }
+                else {
+                    member.user.send('I was unable to verify your premium status. If you are a premium subscriber, please respond with: $verify lookup email postcode/zipcode. For example:\\n$verify lookup billing@cryptocache.tech 12345');
+                    botLogsChannel.send(member.user.tag + ' was not able to be verified automatically');
+                }
+            });
+        }
     con.release();
-  });
+    });
 };
 
+const verified = (theMem, toBot, member, botDB, botCache, subResults, ccpRole, context) => {
+    theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
+    member.send('You have been automatically verified and granted access!');
+    if(toBot) {
+        botDB.getConnection(async (err, botcon) => {
+            let botIns = mysql.format('INSERT INTO discord (discord_tag, discord_id, order_id) VALUES (?, ?, ?)',
+                [
+                    theMem.user.tag,
+                    theMem.id,
+                    subResults[0].order_id
+                ]);
+            botcon.query(botIns, (err, r) => {
+                if(err) {
+                    throw (err);
+                }
+                else {
+                    botCache.push(theMem.id);
+                }
+            });
+            botcon.release();
+        });
+    }
+}
 module.exports = createGuildMemberAddHandler;
