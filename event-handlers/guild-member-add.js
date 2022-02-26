@@ -7,10 +7,12 @@ const createGuildMemberAddHandler = (context) => (member) => {
     let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
     let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
     let theMem = theGuild.members.cache.find(m => m.id === member.user.id);
+    let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
     billingDB.getConnection((err, con) => {
         if(botCache.indexOf(member.id) > 0) {
             verified(theMem, false, member, botDB, botCache, false, ccpRole, context);
-            botLogsChannel.send(member.user.tag + ' was verified via botCache');
+            console.log(member.user.tag + ' was verified via botCache');
+            logChan.send(member.user.tag + ' was verified via botCache');
         }
         else {
           let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND meta_value = ?",
@@ -26,11 +28,13 @@ const createGuildMemberAddHandler = (context) => (member) => {
                 }
                 if (subResults.length > 0) {
                     verified(theMem, true, member, botDB, botCache, subResults, ccpRole, context);
-                    botLogsChannel.send(member.user.tag + ' was verified via subscription');
+                    console.log(member.user.tag + ' was verified via subscription');
+                    logChan.send(member.user.tag + ' was verified via subscription');
                 }
                 else {
                     member.user.send('I was unable to verify your premium status. If you are a premium subscriber, please respond with: $verify lookup email postcode/zipcode. For example:\\n$verify lookup billing@cryptocache.tech 12345');
-                    botLogsChannel.send(member.user.tag + ' was not able to be verified automatically');
+                    console.log(member.user.tag + ' was not able to be verified automatically');
+                    logChan.send(member.user.tag + ' was not able to be verified automatically');
                 }
             });
         }
