@@ -8,15 +8,15 @@ const createGuildMemberAddHandler = (context) => (member) => {
     let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
     let theMem = theGuild.members.cache.find(m => m.id === member.user.id);
     let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
-    let nonPremRole = theGuild.roles.cache.find(n => n.name === 'Non-premium');
+    let nonPremRole = theGuild.roles.cache.find(n => n.id === 'Non-premium');
     let unverified = theGuild.roles.cache.find(m => m.name === 'Unverified');
     billingDB.getConnection((err, con) => {
         if(botCache.indexOf(member.id) > 0) {
             verified(theMem, false, member, botDB, botCache, false, ccpRole, context, nonPremRole, unverified);
             console.log(member.user.tag + ' was verified via botCache');
             logChan.send(member.user.tag + ' was verified via botCache');
-            console.log(nonPremRole);
-            console.log(unverified);
+            //console.log(nonPremRole);
+            //console.log(unverified);
         }
         else {
           let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND meta_value = ?",
