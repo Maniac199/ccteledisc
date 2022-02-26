@@ -8,9 +8,11 @@ const createGuildMemberAddHandler = (context) => (member) => {
     let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
     let theMem = theGuild.members.cache.find(m => m.id === member.user.id);
     let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
+    let nonPremRole = theGuild.roles.cache.find(r => r.name === 'Non-premium');
+    let unverified = theGuild.roles.cache.find(r => r.name === 'Unverified');
     billingDB.getConnection((err, con) => {
         if(botCache.indexOf(member.id) > 0) {
-            verified(theMem, false, member, botDB, botCache, false, ccpRole, context);
+            verified(theMem, false, member, botDB, botCache, false, ccpRole, context, nonPremRole, unverified);
             console.log(member.user.tag + ' was verified via botCache');
             logChan.send(member.user.tag + ' was verified via botCache');
         }
@@ -27,7 +29,7 @@ const createGuildMemberAddHandler = (context) => (member) => {
                     throw (err);
                 }
                 if (subResults.length > 0) {
-                    verified(theMem, true, member, botDB, botCache, subResults, ccpRole, context);
+                    verified(theMem, true, member, botDB, botCache, subResults, ccpRole, context, nonPremRole, unverified);
                     console.log(member.user.tag + ' was verified via subscription');
                     logChan.send(member.user.tag + ' was verified via subscription');
                 }
@@ -42,8 +44,10 @@ const createGuildMemberAddHandler = (context) => (member) => {
     });
 };
 
-const verified = (theMem, toBot, member, botDB, botCache, subResults, ccpRole, context) => {
+const verified = (theMem, toBot, member, botDB, botCache, subResults, ccpRole, context, nonPremRole, unverified) => {
     theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
+    theMem.roles.remove(nonPremRole).catch((err) => context.logger.error(err.message));
+    theMem.roles.remove(unverified).catch((err) => context.logger.error(err.message));
     member.send('You have been automatically verified and granted access!');
     if(toBot) {
         botDB.getConnection(async (err, botcon) => {
