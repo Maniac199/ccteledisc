@@ -38,7 +38,7 @@ const onMessageHandler = createMessageHandler(context);
 
 // Setup handlers
 client.on('ready', onReadyHandler);
-//client.on('guildMemberAdd', onGuildMemberAddHandler);
+client.on('guildMemberAdd', onGuildMemberAddHandler);
 //client.on('guildMemberUpdate', onGuildMemberUpdateHandler);
 client.on('message', onMessageHandler);
 
