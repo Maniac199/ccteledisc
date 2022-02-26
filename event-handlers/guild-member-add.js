@@ -47,28 +47,33 @@ const createGuildMemberAddHandler = (context) => (member) => {
 };
 
 const verified = (theMem, toBot, member, botDB, botCache, subResults, ccpRole, context, nonPremRole, unverified) => {
-    theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
-    theMem.roles.remove(nonPremRole).catch((err) => context.logger.error(err.message));
-    theMem.roles.remove(unverified).catch((err) => context.logger.error(err.message));
-    member.send('You have been automatically verified and granted access!');
-    if(toBot) {
-        botDB.getConnection(async (err, botcon) => {
-            let botIns = mysql.format('INSERT INTO discord (discord_tag, discord_id, order_id) VALUES (?, ?, ?)',
-                [
-                    theMem.user.tag,
-                    theMem.id,
-                    subResults[0].order_id
-                ]);
-            botcon.query(botIns, (err, r) => {
-                if(err) {
-                    throw (err);
+    setTimeout(function() {
+        theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
+        setTimeout(function() {
+            theMem.roles.remove(nonPremRole).catch((err) => context.logger.error(err.message));
+            setTimeout(function() {
+                theMem.roles.remove(unverified).catch((err) => context.logger.error(err.message));
+                member.send('You have been automatically verified and granted access!');
+                if (toBot) {
+                    botDB.getConnection(async (err, botcon) => {
+                        let botIns = mysql.format('INSERT INTO discord (discord_tag, discord_id, order_id) VALUES (?, ?, ?)',
+                            [
+                                theMem.user.tag,
+                                theMem.id,
+                                subResults[0].order_id
+                            ]);
+                        botcon.query(botIns, (err, r) => {
+                            if (err) {
+                                throw (err);
+                            } else {
+                                botCache.push(theMem.id);
+                            }
+                        });
+                        botcon.release();
+                    });
                 }
-                else {
-                    botCache.push(theMem.id);
-                }
-            });
-            botcon.release();
-        });
-    }
+            }, 2000);
+        }, 2000);
+    }, 5000);
 }
 module.exports = createGuildMemberAddHandler;
