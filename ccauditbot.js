@@ -32,7 +32,7 @@ const context = {
 
 // Create Handlers
 const onReadyHandler = createOnReadyHandler(context);
-//const onGuildMemberAddHandler = createGuildMemberAddHandler(context);
+const onGuildMemberAddHandler = createGuildMemberAddHandler(context);
 //const onGuildMemberUpdateHandler = createGuildMemberUpdateHandler(context);
 const onMessageHandler = createMessageHandler(context);
 
