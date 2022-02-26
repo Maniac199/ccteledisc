@@ -3,7 +3,7 @@ const configuration = require('./configuration');
 const createDatabase = require('./database');
 const createLogger = require('./logger');
 const createOnReadyHandler = require('./event-handlers/ready');
-//const createGuildMemberAddHandler = require('./event-handlers/guild-member-add');
+const createGuildMemberAddHandler = require('./event-handlers/guild-member-add');
 //const createGuildMemberUpdateHandler = require('./event-handlers/guild-member-update');
 const createMessageHandler = require('./event-handlers/message');
 
