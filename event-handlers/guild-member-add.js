@@ -8,7 +8,7 @@ const createGuildMemberAddHandler = (context) => (member) => {
     let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
     let theMem = theGuild.members.cache.find(m => m.id === member.user.id);
     let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
-    let nonPremRole = theGuild.roles.cache.find(n => n.id === 'Non-premium');
+    let nonPremRole = theGuild.roles.cache.find(n => n.name === 'Non-premium');
     let unverified = theGuild.roles.cache.find(m => m.name === 'Unverified');
     billingDB.getConnection((err, con) => {
         if(botCache.indexOf(member.id) > 0) {
