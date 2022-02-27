@@ -32,6 +32,7 @@ const verify = (context) => {
     }
     if(botCache.indexOf(message.author.id) > 0) {
         message.reply('Already verified.');
+        logChan.send(message.author.tag + ' used $verify but was already verified');
     }
     else if (!lookup){
         billingDB.getConnection((err, con) => {
