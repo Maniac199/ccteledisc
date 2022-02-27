@@ -10,9 +10,12 @@ const verify = (context) => {
     let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
     let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
     let theMem = theGuild.members.cache.find(m => m.id === message.author.id);
+    let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
+    let nonPremRole = theGuild.roles.cache.find(n => n.name === 'Non-premium');
+    let unverified = theGuild.roles.cache.find(m => m.name === 'Unverified');
     if(guild) {
         if (guild.id !== mainServerID || (channel.id !== botLogsChannel && channel.id !== botListenChannel)) {
-            console.log('exited from verify');
+            //console.log('exited from verify');
             return;
         }
     }
@@ -45,6 +48,7 @@ const verify = (context) => {
                 }
                 if (subResults.length > 0 && !testmode) {
                     message.reply(message.author.username + ' You have been verified, granting access!');
+                    logChan.send(message.author.tag + ' used the $verify command and was granted access');
                     if(ccpRole.members.find(m => m.id === message.author.id)) {
                         message.reply('Access has been verified');
                     }
@@ -82,11 +86,14 @@ const verify = (context) => {
                             }
                         });
                         theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
+                        theMem.roles.remove(nonPremRole).catch((err) => context.logger.error(err.message));
+                        theMem.roles.remove(unverified).catch((err) => context.logger.error(err.message));
                         message.reply('Access has been granted');
                     }
                 } else {
                     message.reply(message.author.username + ' I will continue the verification process via PM!');
                     message.author.send('Please respond with: $verify lookup email postcode/zipcode. For example:\n$verify lookup billing@cryptocache.tech 12345');
+                    logChan.send(message.author.tag + ' used $verify and was not located');
                 }
             });
             con.release();
@@ -109,7 +116,10 @@ const verify = (context) => {
                 }
                 if (subResults.length > 0) {
                     message.reply('Account located, granting access');
+                    logChan.send(message.author.tag + ' used lookup and was granted access');
                     theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
+                    theMem.roles.remove(nonPremRole).catch((err) => context.logger.error(err.message));
+                    theMem.roles.remove(unverified).catch((err) => context.logger.error(err.message));
                     botDB.getConnection(async (err, botcon) => {
                         let botIns = mysql.format('INSERT INTO discord (discord_tag, discord_id, order_id) VALUES (?, ?, ?)',
                             [
@@ -129,6 +139,7 @@ const verify = (context) => {
                     });
                 } else {
                     message.reply('Unable to locate account');
+                    logChan.send(message.author.tag + ' used lookup and was not granted access');
                 }
             });
         });
