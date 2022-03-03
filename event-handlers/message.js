@@ -5,7 +5,7 @@ const createMessageHandler = context => ctx => {
   let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
 
 
-  console.log('message handler called');
+  //console.log('message handler called');
   //console.log(ctx);
   //const chatID = chat.id;
   ctx.reply('You said: ' + ctx.update.channel_post.text + ' and botlogschannel is: ' + botLogsChannel);
