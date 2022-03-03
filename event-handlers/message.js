@@ -2,8 +2,8 @@ const commandList = require('../command-list');
 
 const createMessageHandler = (context) => (message) => {
   const { configuration } = context;
-  const { text, chat, from } = message;
-  const { botLogsChannelName, botPrefix, botListenChannel } = configuration;
+  //const { text, chat, from } = message;
+  //const { botLogsChannelName, botPrefix, botListenChannel } = configuration;
 
   // Don't respond to messages that don't have the correct
   // prefix, are from another bot or aren't in the correct
@@ -18,7 +18,7 @@ const createMessageHandler = (context) => (message) => {
     return;
   }
 */
-  context.message = message;
+  //context.message = message;
   //context.args = message.text.slice(botPrefix.length).trim().split(' ');
   //const userCommandEntry = context.args.shift();
 
