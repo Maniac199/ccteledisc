@@ -1,4 +1,4 @@
-const createMessageHandler = ctx => {
+const createMessageHandler = context => ctx => {
  // const { configuration, logger, teleClient } = context;
   //const { update } = ctx;
   //const { mainServerID, botLogsChannel } = configuration;
