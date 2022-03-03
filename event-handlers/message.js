@@ -1,12 +1,14 @@
 const createMessageHandler = context => ctx => {
-  const { configuration, logger, teleClient } = context;
-  //const { update } = ctx;
+  const { configuration, client } = context;
   const { mainServerID, botLogsChannel } = configuration;
-  //const { text, chat, from } = message;
+  let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
+  let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
+
   console.log('message handler called');
   //console.log(ctx);
   //const chatID = chat.id;
   ctx.reply('You said: ' + ctx.update.channel_post.text + ' and botlogschannel is: ' + botLogsChannel);
+  logChan.send('From Telegram test channel: ' + ctx.update.channel_post.text);
 };
 
 module.exports = { createMessageHandler };
