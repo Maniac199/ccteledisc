@@ -41,7 +41,7 @@ const onReadyHandler = createOnReadyHandler(context);
 client.on('ready', onReadyHandler);
 teleClient.start((ctx) => { ctx.reply('Starting'); });
 teleClient.on('channel_post', (ctx) => {
-  ctx.reply('channel_post');
+  ctx.reply('You said ' + ctx.message.text);
   console.log(ctx);
   createMessageHandler(ctx, context);
 });
