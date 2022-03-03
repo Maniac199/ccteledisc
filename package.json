@@ -1,11 +1,11 @@
 {
-  "name": "ccauditbot",
+  "name": "ccteledisc",
   "version": "1.0.0",
   "description": "",
-  "main": "ccauditbot.js",
+  "main": "ccteledisc.js",
   "scripts": {
     "start": "pm2 restart ecosystem.config.js --env production",
-    "start:dev": "nodemon ccauditbot.js"
+    "start:dev": "nodemon ccteledisc.js"
   },
   "author": "fireseal",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7",
     "pm2": "^5.1.2",
-    "winston": "^3.5.1"
+    "winston": "^3.5.1",
+    "node-telegram-bot-api": "0.50.0"
   }
 }

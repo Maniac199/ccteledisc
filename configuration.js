@@ -24,6 +24,7 @@ const configuration = {
   logFile: process.env.LOG_FILE,
   errorLogFile: process.env.ERROR_LOG_FILE,
   logLevel: process.env.LOG_LEVEL,
+  teleToken: process.env.TELETOKEN
 };
 
 module.exports = configuration;

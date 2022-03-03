@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      script: 'ccauditbot.js',
+      script: 'ccteledisc.js',
       watch: '.',
     },
   ],

@@ -1,10 +1,9 @@
 const Discord = require('discord.js');
+const telegram = require('node-telegram-bot-api');
 const configuration = require('./configuration');
 const createDatabase = require('./database');
 const createLogger = require('./logger');
 const createOnReadyHandler = require('./event-handlers/ready');
-const createGuildMemberAddHandler = require('./event-handlers/guild-member-add');
-//const createGuildMemberUpdateHandler = require('./event-handlers/guild-member-update');
 const createMessageHandler = require('./event-handlers/message');
 
 const logger = createLogger(configuration);
@@ -13,6 +12,8 @@ const logger = createLogger(configuration);
 const client = new Discord.Client({
   ws: { intents: new Discord.Intents(Discord.Intents.ALL) },
 });
+
+const tele = new telegram(configuration.teleToken, {polling: true});
 
 // Get a database object
 const billingDB = createDatabase(configuration).billingDB;
@@ -32,15 +33,11 @@ const context = {
 
 // Create Handlers
 const onReadyHandler = createOnReadyHandler(context);
-const onGuildMemberAddHandler = createGuildMemberAddHandler(context);
-//const onGuildMemberUpdateHandler = createGuildMemberUpdateHandler(context);
 const onMessageHandler = createMessageHandler(context);
 
 // Setup handlers
 client.on('ready', onReadyHandler);
-client.on('guildMemberAdd', onGuildMemberAddHandler);
-//client.on('guildMemberUpdate', onGuildMemberUpdateHandler);
-client.on('message', onMessageHandler);
+tele.on('message', onMessageHandler);
 
-// Start bot
+// Start bots
 client.login(configuration.botToken);
