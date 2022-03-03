@@ -2,6 +2,7 @@ const commandList = require('../command-list');
 
 const createMessageHandler = (ctx, context) => (message) => {
   const { configuration } = context;
+  const { message } = ctx;
   //const { text, chat, from } = message;
   //const { botLogsChannelName, botPrefix, botListenChannel } = configuration;
 
