@@ -4,7 +4,7 @@ const configuration = require('./configuration');
 const createDatabase = require('./database');
 const createLogger = require('./logger');
 const createOnReadyHandler = require('./event-handlers/ready');
-const createMessageHandler = require('./event-handlers/message');
+const { createMessageHandler } = require('./event-handlers/message');
 
 const logger = createLogger(configuration);
 
@@ -40,11 +40,7 @@ const onReadyHandler = createOnReadyHandler(context);
 // Setup handlers
 client.on('ready', onReadyHandler);
 teleClient.start((ctx) => { ctx.reply('Starting'); });
-teleClient.on('channel_post', (ctx) => {
-  ctx.reply('You said ' + ctx.update.channel_post.text);
-  //console.log(ctx);
-  createMessageHandler(ctx, context);
-});
+teleClient.on('channel_post', createMessageHandler(context));
 
 
 
