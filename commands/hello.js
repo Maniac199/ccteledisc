@@ -1,15 +1,11 @@
 
 const hello = (context) => {
-  const { message, configuration, logger } = context;
+  const { message, configuration, logger, teleClient } = context;
   const { mainServerID, botLogsChannel } = configuration;
-  const { guild, channel } = message;
+  const { text, chat, from } = message;
 
-  if (guild.id !== mainServerID || channel.id !== botLogsChannel) {
-    return;
-  }
-  message.reply('Hello ' +  message.author.tag + '\nServerID: ' + guild.id + '\nThis Channel ID: ' + channel.id);
-
-  logger.info(`sending hello to ${message.author.id}!`);
+  const chatID = chat.id;
+  teleClient.sendMessage(chatID, 'You said: ' + text);
 };
 
 module.exports = hello;

@@ -13,7 +13,7 @@ const client = new Discord.Client({
   ws: { intents: new Discord.Intents(Discord.Intents.ALL) },
 });
 
-const tele = new telegram(configuration.teleToken, {polling: true});
+const teleClient = new telegram(configuration.teleToken, {polling: true});
 
 // Get a database object
 const billingDB = createDatabase(configuration).billingDB;
@@ -22,6 +22,7 @@ const botCache = [];
 // Create the context
 const context = {
   client,
+  teleClient,
   logger,
   billingDB,
   botDB,
@@ -37,7 +38,7 @@ const onMessageHandler = createMessageHandler(context);
 
 // Setup handlers
 client.on('ready', onReadyHandler);
-tele.on('message', onMessageHandler);
+teleClient.on('message', onMessageHandler);
 
 // Start bots
 client.login(configuration.botToken);
