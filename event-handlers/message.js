@@ -9,4 +9,4 @@ const createMessageHandler = ctx => {
   ctx.reply('You said: ' + ctx.update.channel_post.text);
 };
 
-module.exports = createMessageHandler;
+module.exports = { createMessageHandler };
