@@ -1,12 +1,12 @@
 const createMessageHandler = (ctx, context) => () => {
   const { configuration, logger, teleClient } = context;
-  const { message } = ctx;
+  const { update } = ctx;
   //const { mainServerID, botLogsChannel } = configuration;
   //const { text, chat, from } = message;
   console.log('message handler called');
-  console.log(ctx);
+  //console.log(ctx);
   //const chatID = chat.id;
-  ctx.reply('You said: ' + ctx.text);
+  ctx.reply('You said: ' + update.channel_post.text);
 };
 
 module.exports = createMessageHandler;
