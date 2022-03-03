@@ -40,7 +40,7 @@ const onReadyHandler = createOnReadyHandler(context);
 // Setup handlers
 client.on('ready', onReadyHandler);
 teleClient.start((ctx) => { ctx.reply('Starting'); });
-teleClient.on('channel_post', createMessageHandler(context));
+teleClient.on('channel_post', createMessageHandler);
 
 
 
