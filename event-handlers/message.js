@@ -1,5 +1,5 @@
-const createMessageHandler = (ctx, context) => (message) => {
-  const { message, configuration, logger, teleClient } = context;
+const createMessageHandler = (ctx, context) => () => {
+  const { configuration, logger, teleClient } = context;
   //const { mainServerID, botLogsChannel } = configuration;
   //const { text, chat, from } = message;
   console.log('message handler called');
