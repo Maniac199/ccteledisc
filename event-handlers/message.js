@@ -6,7 +6,7 @@ const createMessageHandler = (ctx, context) => () => {
   console.log('message handler called');
   console.log(ctx);
   //const chatID = chat.id;
-  ctx.reply('You said: ' + ctx.message.text);
+  ctx.reply('You said: ' + ctx.text);
 };
 
 module.exports = createMessageHandler;
