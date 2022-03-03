@@ -5,6 +5,7 @@ const hello = (context) => {
   const { text, chat, from } = message;
 
   console.log(message);
+
   const chatID = chat.id;
   teleClient.sendMessage(chatID, 'You said: ' + text);
 };
