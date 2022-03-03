@@ -1,6 +1,6 @@
 const commandList = require('../command-list');
 
-const createMessageHandler = (context) => (message) => {
+const createMessageHandler = (ctx, context) => (message) => {
   const { configuration } = context;
   //const { text, chat, from } = message;
   //const { botLogsChannelName, botPrefix, botListenChannel } = configuration;
@@ -24,7 +24,7 @@ const createMessageHandler = (context) => (message) => {
 
   const command = commandList.find((cmd) => cmd.name === "hello");
   if (command) {
-    command.execute(context);
+    command.execute(ctx, context);
   }
 };
 
