@@ -5,7 +5,7 @@ const createMessageHandler = context => ctx => {
   const { mainServerID, botLogsChannel } = configuration;
   let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
   let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
-
+  let theMem = theGuild.members.cache.find(m => m.id === '233762968288886784');
 
   //console.log('message handler called');
   //console.log(ctx);
@@ -13,7 +13,7 @@ const createMessageHandler = context => ctx => {
   ctx.reply('You said: ' + ctx.update.channel_post.text + ' and botlogschannel is: ' + botLogsChannel);
   const embedMsg = new Discord.MessageEmbed()
       .setColor(0x3498DB)
-      //.setAuthor("CryptoCache", "https://cryptocache.tech/wp-content/themes/cobalt-theme2.0/img/cc_logo.png")
+      .setAuthor("CryptoCache")
       .setTitle("Swing Trade Alert")
       .setDescription('test')
       .setTimestamp();
