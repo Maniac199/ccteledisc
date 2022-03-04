@@ -9,13 +9,13 @@ const createMessageHandler = context => ctx => {
   //console.log(ctx);
   //const chatID = chat.id;
   ctx.reply('You said: ' + ctx.update.channel_post.text + ' and botlogschannel is: ' + botLogsChannel);
-  embedMsg.setColor(0x3498DB)
+  const embed = embedMsg.setColor(0x3498DB)
       .setAuthor("CryptoCache", "https://cryptocache.tech/wp-content/themes/cobalt-theme2.0/img/cc_logo.png")
       .setTitle("Swing Trade Alert")
       .setDescription('test')
       .setTimestamp();
   //logChan.send({ embed: [embedMsg] });
-  console.log({ embed: [embedMsg] })
+  console.log({ embed: [embed] })
 };
 
 module.exports = { createMessageHandler };
