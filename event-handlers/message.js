@@ -12,7 +12,7 @@ const createMessageHandler = context => ctx => {
   embedMsg.setColor(0x3498DB)
       .setAuthor("CryptoCache", "https://cryptocache.tech/wp-content/themes/cobalt-theme2.0/img/cc_logo.png")
       .setTitle("Swing Trade Alert")
-      .setDescription(ctx.update.channel_post.text)
+      .setDescription('test')
       .setTimestamp();
   logChan.send({ embeds: [embedMsg] });
 };
