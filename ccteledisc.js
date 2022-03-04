@@ -1,7 +1,6 @@
-const Discord = require('discord.js');
+const { Intents, Client } = require('discord.js');
 const { Telegraf } = require('telegraf');
 const configuration = require('./configuration');
-const createDatabase = require('./database');
 const createLogger = require('./logger');
 const createOnReadyHandler = require('./event-handlers/ready');
 const { createMessageHandler } = require('./event-handlers/message');
@@ -9,23 +8,18 @@ const { createMessageHandler } = require('./event-handlers/message');
 const logger = createLogger(configuration);
 
 // Create a client
-const client = new Discord.Client({ intents: new Discord.Intents(Discord.Intents.ALL) });
-const embedMsg = new Discord.MessageEmbed();
+const allIntents = new Intents(32767);
+const client = new Client({ allIntents });
 
 const teleClient = new Telegraf(configuration.teleToken);
 
 // Get a database object
-const billingDB = createDatabase(configuration).billingDB;
-const botDB = createDatabase(configuration).botDB;
-const botCache = [];
+
 // Create the context
 const context = {
   client,
   teleClient,
   logger,
-  billingDB,
-  botDB,
-  botCache,
   configuration,
   logChannel: '', // There's better ways of doing this but this won't hurt in a small app like this
   reportChannel: '',

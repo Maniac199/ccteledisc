@@ -4,7 +4,8 @@ const createMessageHandler = context => ctx => {
   const { configuration, client } = context;
   const { mainServerID, botLogsChannel } = configuration;
 
-  let logChan = client.channels.fetch(botLogsChannel);
+  let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
+  let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
 
   //console.log('message handler called');
   //console.log(ctx);
