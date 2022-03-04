@@ -7,7 +7,7 @@ const createMessageHandler = context => ctx => {
   let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
   let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
   let msgContent = ctx.update.channel_post.text;
-  let msgSplit = msgContent.split(' ');
+  let msgSplit = msgContent.split('\n');
   console.log(msgSplit);
   let url = msgSplit[msgSplit.indexOf('https')];
   console.log(url);
