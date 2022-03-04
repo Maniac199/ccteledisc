@@ -7,8 +7,14 @@ const createMessageHandler = context => ctx => {
   let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
   let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
   let msgContent = ctx.update.channel_post.text;
-  let msgSplit = msgContent.slice(msgContent.indexOf('https://'));
+  let msgSplit = msgContent.slice(msgContent.indexOf('https://')).trim().split('\n');
   console.log(msgSplit);
+  if(msgSplit.indexOf('youtu.be') || msgSplit.indexOf('youtube')) {
+    console.log('video');
+  }
+  else {
+    console.log('image');
+  }
   const embedMsg = new MessageEmbed()
       .setColor(0x3498DB)
       .setAuthor({name: "CryptoCache"})
