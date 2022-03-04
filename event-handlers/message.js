@@ -9,7 +9,13 @@ const createMessageHandler = context => ctx => {
   //console.log(ctx);
   //const chatID = chat.id;
   ctx.reply('You said: ' + ctx.update.channel_post.text + ' and botlogschannel is: ' + botLogsChannel);
-  logChan.send('From Telegram test channel: ' + ctx.update.channel_post.text);
+  const embedMsg = new Discord.MessageEmbed()
+      .setColor(0x3498DB)
+      .setAuthor("CryptoCache", "https://cryptocache.tech/wp-content/themes/cobalt-theme2.0/img/cc_logo.png")
+      .setTitle("Swing Trade Alert")
+      .setDescription(ctx.update.channel_post.text)
+      .setTimestamp();
+  logChan.send({ embeds: [embedMsg] });
 };
 
 module.exports = { createMessageHandler };
