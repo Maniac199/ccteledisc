@@ -9,9 +9,9 @@ const createMessageHandler = context => ctx => {
   let msgContent = ctx.update.channel_post.text;
   let msgSplit = msgContent.slice(msgContent.indexOf('https://')).trim().split('\n');
   console.log(msgSplit[0]);
-  console.log(msgSplit.indexOf('youtu.be'));
-  console.log(msgSplit.indexOf('youtube'));
-  if(msgSplit.indexOf('youtu.be') > -1 || msgSplit.indexOf('youtube') > -1) {
+  console.log(msgSplit[0].indexOf('youtu.be'));
+  console.log(msgSplit[0].indexOf('youtube'));
+  if(msgSplit[0].indexOf('youtu.be') > -1 || msgSplit[0].indexOf('youtube') > -1) {
     console.log('video');
   }
   else {
