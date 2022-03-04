@@ -35,7 +35,8 @@ const createMessageHandler = context => ctx => {
       .setTimestamp()
       .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
 
-  logChan.send('testing');
+  console.log(logChan);
+  //logChan.send('testing');
   //logChan.send({ embeds: [exampleEmbed] });
  // logChan.send({ embeds: [embedMsg] });
   //console.log({ embed: [embed] })
