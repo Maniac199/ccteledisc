@@ -8,9 +8,9 @@ const createMessageHandler = context => ctx => {
   let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
   let msgContent = ctx.update.channel_post.text;
   let msgSplit = msgContent.slice(msgContent.indexOf('https://')).trim().split('\n');
-  console.log(msgSplit);
-  console.log(msgSplit.search('youtu.be'));
-  console.log(msgSplit.search('youtube'));
+  console.log(msgSplit[0]);
+  console.log(msgSplit.indexOf('youtu.be'));
+  console.log(msgSplit.indexOf('youtube'));
   if(msgSplit.indexOf('youtu.be') > -1 || msgSplit.indexOf('youtube') > -1) {
     console.log('video');
   }
