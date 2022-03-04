@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 const createMessageHandler = context => ctx => {
   const { configuration, client } = context;
@@ -11,9 +11,9 @@ const createMessageHandler = context => ctx => {
   //console.log(ctx);
   //const chatID = chat.id;
   ctx.reply('You said: ' + ctx.update.channel_post.text + ' and botlogschannel is: ' + botLogsChannel);
-  const embedMsg = new Discord.MessageEmbed()
+  const embedMsg = new MessageEmbed()
       .setColor(0x3498DB)
-      .setAuthor("CryptoCache")
+      .setAuthor({name: "CryptoCache"})
       .setTitle("Swing Trade Alert")
       .setDescription('test')
       .setTimestamp();
