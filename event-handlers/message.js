@@ -14,7 +14,7 @@ const createMessageHandler = context => ctx => {
       .setTitle("Swing Trade Alert")
       .setDescription('test')
       .setTimestamp();
-  logChan.send({ embed: [embed] });
+  logChan.send({ embeds: [embed] });
   //console.log({ embed: [embed] })
 };
 
