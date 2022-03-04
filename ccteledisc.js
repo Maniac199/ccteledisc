@@ -12,6 +12,7 @@ const logger = createLogger(configuration);
 const client = new Discord.Client({
   ws: { intents: new Discord.Intents(Discord.Intents.ALL) },
 });
+const embedMsg = new Discord.MessageEmbed();
 
 const teleClient = new Telegraf(configuration.teleToken);
 
@@ -27,6 +28,7 @@ const context = {
   billingDB,
   botDB,
   botCache,
+  embedMsg,
   configuration,
   logChannel: '', // There's better ways of doing this but this won't hurt in a small app like this
   reportChannel: '',
