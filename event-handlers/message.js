@@ -11,13 +11,32 @@ const createMessageHandler = context => ctx => {
   //console.log(ctx);
   //const chatID = chat.id;
   ctx.reply('You said: ' + ctx.update.channel_post.text + ' and botlogschannel is: ' + botLogsChannel);
-  const embedMsg = new MessageEmbed()
+  /*const embedMsg = new MessageEmbed()
       .setColor(0x3498DB)
       .setAuthor({name: "CryptoCache"})
       .setTitle("Swing Trade Alert")
       .setDescription('test')
-      .setTimestamp();
-  logChan.send({ embeds: [embedMsg] });
+      .setTimestamp();*/
+  const exampleEmbed = new MessageEmbed()
+      .setColor('#0099ff')
+      .setTitle('Some title')
+      .setURL('https://discord.js.org/')
+      .setAuthor({ name: 'Some name', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
+      .setDescription('Some description here')
+      .setThumbnail('https://i.imgur.com/AfFp7pu.png')
+      .addFields(
+          { name: 'Regular field title', value: 'Some value here' },
+          { name: '\u200B', value: '\u200B' },
+          { name: 'Inline field title', value: 'Some value here', inline: true },
+          { name: 'Inline field title', value: 'Some value here', inline: true },
+      )
+      .addField('Inline field title', 'Some value here', true)
+      .setImage('https://i.imgur.com/AfFp7pu.png')
+      .setTimestamp()
+      .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
+
+  logChan.send({ embeds: [exampleEmbed] });
+ // logChan.send({ embeds: [embedMsg] });
   //console.log({ embed: [embed] })
 };
 
