@@ -9,8 +9,7 @@ const logger = createLogger(configuration);
 
 // Create a client
 const allIntents = new Intents(32767);
-console.log(allIntents.serialize());
-const client = new Client({ allIntents });
+const client = new Client({ intents: allIntents });
 
 const teleClient = new Telegraf(configuration.teleToken);
 
