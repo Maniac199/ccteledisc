@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 const createMessageHandler = context => ctx => {
   const { configuration, client } = context;
   const { mainServerID, botLogsChannel } = configuration;
-  let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
+
   let logChan = client.channels.fetch(botLogsChannel);
 
   //console.log('message handler called');
@@ -33,10 +33,8 @@ const createMessageHandler = context => ctx => {
       .setImage('https://i.imgur.com/AfFp7pu.png')
       .setTimestamp()
       .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
-  console.log(botLogsChannel);
-  console.log(theGuild);
-  console.log(logChan);
-  //logChan.send('testing');
+
+  logChan.send('testing');
   //logChan.send({ embeds: [exampleEmbed] });
  // logChan.send({ embeds: [embedMsg] });
   //console.log({ embed: [embed] })
