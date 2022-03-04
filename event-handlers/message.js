@@ -8,6 +8,7 @@ const createMessageHandler = context => ctx => {
   let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
   let msgContent = ctx.update.channel_post.text;
   let msgSplit = msgContent.split(' ');
+  console.log(msgSplit);
   let url = msgSplit[msgSplit.indexOf('https')];
   console.log(url);
   const embedMsg = new MessageEmbed()
