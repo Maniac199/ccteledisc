@@ -28,7 +28,6 @@ const context = {
   billingDB,
   botDB,
   botCache,
-  embedMsg,
   configuration,
   logChannel: '', // There's better ways of doing this but this won't hurt in a small app like this
   reportChannel: '',
