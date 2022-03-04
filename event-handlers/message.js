@@ -9,8 +9,8 @@ const createMessageHandler = context => ctx => {
   let msgContent = ctx.update.channel_post.text;
   let msgSplit = msgContent.slice(msgContent.indexOf('https://')).trim().split('\n');
   console.log(msgSplit);
-  console.log(msgSplit.contains('youtu.be'));
-  console.log(msgSplit.contains('youtube'));
+  console.log(msgSplit.search('youtu.be'));
+  console.log(msgSplit.search('youtube'));
   if(msgSplit.indexOf('youtu.be') > -1 || msgSplit.indexOf('youtube') > -1) {
     console.log('video');
   }
