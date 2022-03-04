@@ -9,9 +9,7 @@ const { createMessageHandler } = require('./event-handlers/message');
 const logger = createLogger(configuration);
 
 // Create a client
-const client = new Discord.Client({
-  ws: { intents: new Discord.Intents(Discord.Intents.ALL) },
-});
+const client = new Discord.Client({ intents: new Discord.Intents(Discord.Intents.ALL) });
 const embedMsg = new Discord.MessageEmbed();
 
 const teleClient = new Telegraf(configuration.teleToken);
