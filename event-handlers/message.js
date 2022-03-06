@@ -11,11 +11,10 @@ const createMessageHandler = context => ctx => {
   const embedMsg = new MessageEmbed()
       .setColor(0x3498DB)
       .setAuthor({name: "CryptoCache"})
-      .setTitle("Swing Trade Alert")
+      .setTitle(ctx.update.channel_post.chat.id)
       .setDescription(msgContent)
       .setTimestamp();
   logChan.send({ embeds: [embedMsg] });
-  console.log(ctx.update.channel_post.chat.id);
 
 
 };
