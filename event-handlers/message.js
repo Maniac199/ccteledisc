@@ -15,8 +15,8 @@ const createMessageHandler = context => ctx => {
       .setDescription(msgContent)
       .setTimestamp();
   logChan.send({ embeds: [embedMsg] });
-  console.log(ctx.update.channel_post.chat);
-  console.log(ctx.update.channel_post.sender_chat);
+  logChan.send(ctx.update.channel_post.chat);
+
 
 };
 
