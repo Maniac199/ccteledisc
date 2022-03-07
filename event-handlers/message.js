@@ -14,7 +14,7 @@ const createMessageHandler = context => ctx => {
   console.log(teleprem);
   console.log(teleswing);
   console.log(ctx.update.channel_post.chat.id);
-  if(ctx.update.channel_post.chat.id === teleprem) {
+  if(ctx.update.channel_post.chat.id.toString() === teleprem) {
     console.log('premium match');
     const embedMsg = new MessageEmbed()
         .setColor(0x3498DB)
@@ -24,7 +24,7 @@ const createMessageHandler = context => ctx => {
         .setTimestamp();
     premchan.send({embeds: [embedMsg]});
   }
-  else if(ctx.update.channel_post.chat.id === teleswing) {
+  else if(ctx.update.channel_post.chat.id.toString() === teleswing) {
     console.log('swing match');
     const embedMsg = new MessageEmbed()
         .setColor(0x3498DB)
