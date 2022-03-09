@@ -15,7 +15,7 @@ const createMessageHandler = context => ctx => {
     const embedMsg = new MessageEmbed()
         .setColor(0x3498DB)
         .setAuthor({name: "CryptoCache"})
-        .setTitle("Premium signal")
+        .setTitle("CryptoCache Premium")
         .setDescription(msgContent)
         .setTimestamp();
     premchan.send({embeds: [embedMsg]});
@@ -25,7 +25,7 @@ const createMessageHandler = context => ctx => {
     const embedMsg = new MessageEmbed()
         .setColor(0x3498DB)
         .setAuthor({name: "CryptoCache"})
-        .setTitle("Swing signal")
+        .setTitle("CryptoCache Swings")
         .setDescription(msgContent)
         .setTimestamp();
     swingchan.send({embeds: [embedMsg]});
