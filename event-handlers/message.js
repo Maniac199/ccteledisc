@@ -8,7 +8,7 @@ const createMessageHandler = context => ctx => {
 
   let swingchan = theGuild.channels.cache.find(c => c.id === discswing);
   let premchan = theGuild.channels.cache.find(c => c.id === discprem);
-  let msgContent = ctx.update.channel_post.text;
+  let msgContent = "@everyone " + ctx.update.channel_post.text;
 
   if(ctx.update.channel_post.chat.id.toString() === teleprem) {
 
