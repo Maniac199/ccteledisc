@@ -8,7 +8,7 @@ const createMessageHandler = context => ctx => {
 
   let swingchan = theGuild.channels.cache.find(c => c.id === discswing);
   let premchan = theGuild.channels.cache.find(c => c.id === discprem);
-  let msgContent = "@everyone " + ctx.update.channel_post.text;
+  let msgContent = ctx.update.channel_post.text;
 
   if(ctx.update.channel_post.chat.id.toString() === teleprem) {
 
@@ -18,6 +18,7 @@ const createMessageHandler = context => ctx => {
         .setTitle("CryptoCache Premium")
         .setDescription(msgContent)
         .setTimestamp();
+    premchan.send("@everyone");
     premchan.send({embeds: [embedMsg]});
   }
   else if(ctx.update.channel_post.chat.id.toString() === teleswing) {
@@ -28,6 +29,7 @@ const createMessageHandler = context => ctx => {
         .setTitle("CryptoCache Swings")
         .setDescription(msgContent)
         .setTimestamp();
+    swingchan.send("@everyone");
     swingchan.send({embeds: [embedMsg]});
   }
 
