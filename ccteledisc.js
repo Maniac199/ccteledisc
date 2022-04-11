@@ -4,6 +4,7 @@ const configuration = require('./configuration');
 const createLogger = require('./logger');
 const createOnReadyHandler = require('./event-handlers/ready');
 const { createMessageHandler } = require('./event-handlers/message');
+const { createLookupHandler } = require('./event-handlers/lookup.js');
 
 const logger = createLogger(configuration);
 
@@ -32,8 +33,9 @@ const onReadyHandler = createOnReadyHandler(context);
 
 // Setup handlers
 client.on('ready', onReadyHandler);
-teleClient.start((ctx) => { ctx.reply('Starting'); });
+teleClient.start((ctx) => { ctx.reply('Please DM me directly with /hello'); });
 teleClient.on('channel_post', createMessageHandler(context));
+teleClient.on('message', createLookupHandler(context))
 
 
 
