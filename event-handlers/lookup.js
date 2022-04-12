@@ -6,7 +6,7 @@ const createLookupHandler = context => ctx => {
   context.ctx = ctx;
   context.args = ctx.update.message.text.slice(botPrefix.length).trim().split(' ');
   const userCommandEntry = context.args.shift();
-  console.log(userCommandEntry);
+
   const command = commandList.find((cmd) => cmd.name === userCommandEntry);
 
   if (command) {
