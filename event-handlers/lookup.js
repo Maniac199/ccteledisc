@@ -8,7 +8,7 @@ const createLookupHandler = context => ctx => {
 
   let msgContent = ctx.update.message.text;
 
-  context.args = ctx.update.message.text.content.slice(botPrefix.length).trim().split(' ');
+  context.args = ctx.update.message.text.slice(botPrefix.length).trim().split(' ');
   const userCommandEntry = context.args.shift();
 
   if(userCommandEntry === 'verify' && context.args.length > 3) {
