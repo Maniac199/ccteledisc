@@ -1,7 +1,7 @@
 
 const createLookupHandler = context => ctx => {
   const { configuration, client } = context;
-  const { mainServerID, botLogsChannel } = configuration;
+  const { mainServerID, botLogsChannel, botPrefix } = configuration;
 
   let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
   let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
