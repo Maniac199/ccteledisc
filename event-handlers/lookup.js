@@ -1,22 +1,16 @@
+const commandList = require('../command-list');
 
 const createLookupHandler = context => ctx => {
-  const { configuration, client } = context;
-  const { mainServerID, botLogsChannel, botPrefix } = configuration;
-
-  let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
-  let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
-
-  let msgContent = ctx.update.message.text;
+  const { configuration } = context;
+  const { botPrefix } = configuration;
 
   context.args = ctx.update.message.text.slice(botPrefix.length).trim().split(' ');
   const userCommandEntry = context.args.shift();
 
-  if(userCommandEntry === 'verify' && context.args.length >= 2) {
-    logChan.send('command: ' + userCommandEntry + ' email: ' + context.args[0] + ' zip: ' + context.args[1]);
-  }
-  else {
+  const command = commandList.find((cmd) => cmd.name === userCommandEntry);
 
-    logChan.send('command: ' + userCommandEntry + ' message: ' + msgContent);
+  if (command) {
+    command.execute(context);
   }
 
 };

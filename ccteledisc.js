@@ -33,7 +33,7 @@ const onReadyHandler = createOnReadyHandler(context);
 
 // Setup handlers
 client.on('ready', onReadyHandler);
-teleClient.start((ctx) => { ctx.reply('Please DM me directly with /hello'); });
+teleClient.start((ctx) => { ctx.reply('Please DM me directly with $hello'); });
 teleClient.on('channel_post', createMessageHandler(context));
 teleClient.on('message', createLookupHandler(context))
 
