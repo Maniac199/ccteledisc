@@ -11,7 +11,7 @@ const createLookupHandler = context => ctx => {
 
   if (command) {
     console.log(command);
-    command.execute(context);
+    command.execute(ctx);
   }
 
 };
