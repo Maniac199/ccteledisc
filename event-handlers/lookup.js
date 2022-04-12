@@ -1,4 +1,3 @@
-const { MessageEmbed } = require('discord.js');
 
 const createLookupHandler = context => ctx => {
   const { configuration, client } = context;
@@ -9,7 +8,15 @@ const createLookupHandler = context => ctx => {
 
   let msgContent = ctx.update.message.text;
 
-  logChan.send(msgContent);
+  context.args = message.content.slice(botPrefix.length).trim().split(' ');
+  const userCommandEntry = context.args.shift();
+
+  if(userCommandEntry === 'verify' && context.args.length > 3) {
+    logChan.send('command: ' + userCommandEntry + ' email: ' + context.args[1] + ' zip: ' + context.args[2]);
+  }
+  else {
+    logChan.send(msgContent);
+  }
 
 };
 
