@@ -11,12 +11,12 @@ const createLookupHandler = context => ctx => {
   context.args = ctx.update.message.text.slice(botPrefix.length).trim().split(' ');
   const userCommandEntry = context.args.shift();
 
-  if(userCommandEntry === 'verify' && context.args.length > 3) {
-    logChan.send('command: ' + userCommandEntry + ' email: ' + context.args[1] + ' zip: ' + context.args[2]);
+  if(userCommandEntry.toString() === 'verify' && context.args.length > 3) {
+    logChan.send('command: ' + userCommandEntry + ' email: ' + context.args[0] + ' zip: ' + context.args[1]);
   }
   else {
 
-    logChan.send('command: ' + userCommandEntry + 'message: ' + msgContent);
+    logChan.send('command: ' + userCommandEntry + ' message: ' + msgContent);
   }
 
 };
