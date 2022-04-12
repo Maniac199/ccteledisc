@@ -15,7 +15,8 @@ const createLookupHandler = context => ctx => {
     logChan.send('command: ' + userCommandEntry + ' email: ' + context.args[1] + ' zip: ' + context.args[2]);
   }
   else {
-    logChan.send(msgContent);
+
+    logChan.send('command: ' + userCommandEntry + 'message: ' + msgContent);
   }
 
 };
