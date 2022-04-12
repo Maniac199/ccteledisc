@@ -10,7 +10,6 @@ const createLookupHandler = context => ctx => {
   const command = commandList.find((cmd) => cmd.name === userCommandEntry);
 
   if (command) {
-    console.log(command);
     command.execute(context);
   }
 
