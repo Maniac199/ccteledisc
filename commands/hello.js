@@ -1,5 +1,6 @@
 
-const hello = ctx => {
+const hello = context => {
+  const { ctx } = context;
   console.log('entered hello');
   ctx.reply('Please respond with: $verify lookup email postcode/zipcode. For example:\\n$verify lookup billing@cryptocache.tech 12345');
 

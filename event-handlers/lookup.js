@@ -3,7 +3,7 @@ const commandList = require('../command-list');
 const createLookupHandler = context => ctx => {
   const { configuration } = context;
   const { botPrefix } = configuration;
-
+  context.ctx = ctx;
   context.args = ctx.update.message.text.slice(botPrefix.length).trim().split(' ');
   const userCommandEntry = context.args.shift();
   console.log(userCommandEntry);
@@ -11,7 +11,7 @@ const createLookupHandler = context => ctx => {
 
   if (command) {
     console.log(command);
-    command.execute(ctx);
+    command.execute(context);
   }
 
 };
