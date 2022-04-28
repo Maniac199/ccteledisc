@@ -11,14 +11,14 @@ const verify = (context) => {
     let ccpRole = theGuild.roles.cache.find(r => r.id === ccpRoleID);
     let theMem = theGuild.members.cache.find(m => m.id === message.author.id);
     let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
-    let nonPremRole = theGuild.roles.cache.find(n => n.name === 'Non-premium');
-    let unverified = theGuild.roles.cache.find(m => m.name === 'Unverified');
-    if(guild) {
+   // let nonPremRole = theGuild.roles.cache.find(n => n.name === 'Non-premium');
+   // let unverified = theGuild.roles.cache.find(m => m.name === 'Unverified');
+   /* if(guild) {
         if (guild.id !== mainServerID || (channel.id !== botLogsChannel && channel.id !== botListenChannel)) {
             //console.log('exited from verify');
             return;
         }
-    }
+    }*/
     if(args[0]) {
         if(args[0] === 'test') {
             testmode = true;
