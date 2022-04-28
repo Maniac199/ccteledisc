@@ -5,6 +5,7 @@ const createLogger = require('./logger');
 const createOnReadyHandler = require('./event-handlers/ready');
 const { createMessageHandler } = require('./event-handlers/message');
 const { createLookupHandler } = require('./event-handlers/lookup.js');
+const createDatabase = require('./database');
 
 const logger = createLogger(configuration);
 
@@ -15,12 +16,17 @@ const client = new Client({ intents: allIntents });
 const teleClient = new Telegraf(configuration.teleToken);
 
 // Get a database object
-
+const billingDB = createDatabase(configuration).billingDB;
+const botDB = createDatabase(configuration).botDB;
+const botCache = [];
 // Create the context
 const context = {
   client,
   teleClient,
   logger,
+  billingDB,
+  botDB,
+  botCache,
   configuration,
   logChannel: '', // There's better ways of doing this but this won't hurt in a small app like this
   reportChannel: '',
