@@ -128,17 +128,11 @@ const verify = (context) => {
                         member_limit: 1
                     }
 
-                    const premLink = await ctx.telegram.createChatInviteLink(-1001512142268, options);
-                    //const swingLink = ctx.createChatInviteLink(teleswing, options);
-                    logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink.invite_link + ' Swing link: ');
-                    //ctx.revokeChatInviteLink(teleprem, premLink);
-                    //ctx.revokeChatInviteLink(teleprem, swingLink);
-                    /*theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
-                    theMem.roles.remove(nonPremRole).catch((err) => context.logger.error(err.message));
-                    theMem.roles.remove(unverified).catch((err) => context.logger.error(err.message));*/
-
-
-                    /*botDB.getConnection(async (err, botcon) => {
+                    const premLink = await ctx.telegram.createChatInviteLink(teleprem, options);
+                    const swingLink = await ctx.createChatInviteLink(teleswing, options);
+                    logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink.invite_link + ' Swing link: ' + swingLink.invite_link);
+                    ctx.reply("Please use these one time use links to access the channels:\nPremium: " + premLink.invite_link + "\nSwings: " + swingLink.invite_link);
+                    botDB.getConnection(async (err, botcon) => {
                         let botIns = mysql.format('INSERT INTO telegram (telegram_user, telegram_id, order_id) VALUES (?, ?, ?)',
                             [
                                 ctx.message.from.username,
@@ -154,7 +148,7 @@ const verify = (context) => {
                             }
                         });
                         botcon.release();
-                    });*/
+                    });
                 } else {
                     ctx.reply('Unable to locate account');
                     logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was not granted access');
