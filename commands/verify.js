@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 const verify = (context) => {
     const { message, configuration, billingDB, botDB, args, client, ctx} = context;
-    const { mainServerID, botLogsChannel, teleprem} = configuration;
+    const { mainServerID, botLogsChannel, teleprem, teleswing} = configuration;
     //const { guild, channel } = message;
     //let testmode = false;
     let email, zip;
@@ -128,8 +128,10 @@ const verify = (context) => {
                         member_limit: 1
                     }
                     const premLink = ctx.createChatInviteLink(teleprem, options);
-                    logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink);
+                    const swingLink = ctx.createChatInviteLink(teleswing, options);
+                    logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink + ' Swing link: ' + swingLink);
                     ctx.revokeChatInviteLink(teleprem, premLink);
+                    ctx.revokeChatInviteLink(teleprem, swingLink);
                     /*theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
                     theMem.roles.remove(nonPremRole).catch((err) => context.logger.error(err.message));
                     theMem.roles.remove(unverified).catch((err) => context.logger.error(err.message));*/
