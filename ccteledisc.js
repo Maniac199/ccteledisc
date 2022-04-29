@@ -18,7 +18,7 @@ const teleClient = new Telegraf(configuration.teleToken);
 // Get a database object
 const billingDB = createDatabase(configuration).billingDB;
 const botDB = createDatabase(configuration).botDB;
-const botCache = [];
+//const botCache = [];
 // Create the context
 const context = {
   client,
@@ -26,7 +26,7 @@ const context = {
   logger,
   billingDB,
   botDB,
-  botCache,
+  //botCache,
   configuration,
   logChannel: '', // There's better ways of doing this but this won't hurt in a small app like this
   reportChannel: '',
