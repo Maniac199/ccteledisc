@@ -129,6 +129,7 @@ const verify = (context) => {
                     }
 
                     const premLink = await ctx.telegram.createChatInviteLink(-1001512142268, options);
+                    console.log(premLink);
                     //const swingLink = ctx.createChatInviteLink(teleswing, options);
                     logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink + ' Swing link: ');
                     //ctx.revokeChatInviteLink(teleprem, premLink);
