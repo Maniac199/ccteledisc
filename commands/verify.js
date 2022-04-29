@@ -127,9 +127,9 @@ const verify = (context) => {
                     const options = {
                         member_limit: 1
                     }
-                    const premLink = ctx.createChatInviteLink(teleprem, options);
-                    const swingLink = ctx.createChatInviteLink(teleswing, options);
-                    logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink + ' Swing link: ' + swingLink);
+                    const premLink = ctx.createChatInviteLink(-1001512142268, options);
+                    //const swingLink = ctx.createChatInviteLink(teleswing, options);
+                    logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink + ' Swing link: ');
                     //ctx.revokeChatInviteLink(teleprem, premLink);
                     //ctx.revokeChatInviteLink(teleprem, swingLink);
                     /*theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
