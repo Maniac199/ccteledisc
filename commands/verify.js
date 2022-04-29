@@ -143,9 +143,6 @@ const verify = (context) => {
                             if(err) {
                                 throw (err);
                             }
-                            else {
-                                botCache.push(theMem.id);
-                            }
                         });
                         botcon.release();
                     });
