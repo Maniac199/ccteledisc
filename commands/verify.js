@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 const verify = (context) => {
     const { message, configuration, billingDB, botDB, args, client, ctx} = context;
-    const { mainServerID, botLogsChannel} = configuration;
+    const { mainServerID, botLogsChannel, teleprem} = configuration;
     //const { guild, channel } = message;
     //let testmode = false;
     let email, zip;
@@ -124,10 +124,17 @@ const verify = (context) => {
                 }
                 if (subResults.length > 0) {
                     ctx.reply('Account located, generating links');
-                    logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access');
+                    const options = {
+                        member_limit: 1
+                    }
+                    const premLink = ctx.createChatInviteLink(teleprem, options);
+                    logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink);
+                    ctx.revokeChatInviteLink(teleprem, premLink);
                     /*theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
                     theMem.roles.remove(nonPremRole).catch((err) => context.logger.error(err.message));
                     theMem.roles.remove(unverified).catch((err) => context.logger.error(err.message));*/
+
+
                     /*botDB.getConnection(async (err, botcon) => {
                         let botIns = mysql.format('INSERT INTO telegram (telegram_user, telegram_id, order_id) VALUES (?, ?, ?)',
                             [
