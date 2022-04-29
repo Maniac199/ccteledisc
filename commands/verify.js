@@ -130,8 +130,8 @@ const verify = (context) => {
                     const premLink = ctx.createChatInviteLink(teleprem, options);
                     const swingLink = ctx.createChatInviteLink(teleswing, options);
                     logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink + ' Swing link: ' + swingLink);
-                    ctx.revokeChatInviteLink(teleprem, premLink);
-                    ctx.revokeChatInviteLink(teleprem, swingLink);
+                    //ctx.revokeChatInviteLink(teleprem, premLink);
+                    //ctx.revokeChatInviteLink(teleprem, swingLink);
                     /*theMem.roles.add(ccpRole).catch((err) => context.logger.error(err.message));
                     theMem.roles.remove(nonPremRole).catch((err) => context.logger.error(err.message));
                     theMem.roles.remove(unverified).catch((err) => context.logger.error(err.message));*/
