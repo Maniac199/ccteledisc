@@ -39,7 +39,7 @@ const onReadyHandler = createOnReadyHandler(context);
 
 // Setup handlers
 client.on('ready', onReadyHandler);
-teleClient.start((ctx) => { ctx.telegram.sendMessage('@'+ctx.message.from.username,"Please respond with: $verify lookup email postcode/zipcode. For example:\n$verify lookup billing@cryptocache.tech 12345"); });
+teleClient.start((ctx) => { ctx.telegram.sendMessage(ctx.message.from.id,"Please respond with: $verify lookup email postcode/zipcode. For example:\n$verify lookup billing@cryptocache.tech 12345"); });
 teleClient.on('channel_post', createMessageHandler(context));
 teleClient.on('message', createLookupHandler(context))
 
