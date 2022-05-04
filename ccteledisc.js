@@ -5,6 +5,7 @@ const createLogger = require('./logger');
 const createOnReadyHandler = require('./event-handlers/ready');
 const { createMessageHandler } = require('./event-handlers/message');
 const { createLookupHandler } = require('./event-handlers/lookup.js');
+const { createStartHandler } = require('./event-handlers/start.js');
 const createDatabase = require('./database');
 
 const logger = createLogger(configuration);
@@ -39,12 +40,13 @@ const onReadyHandler = createOnReadyHandler(context);
 
 // Setup handlers
 client.on('ready', onReadyHandler);
-teleClient.start((ctx) => {
+teleClient.start(createStartHandler(ctx));
+/*teleClient.start((ctx) => {
   if(!ctx.message.from.is_bot) {
     ctx.reply('Request acknowledged, I have started a private chat with you.');
     ctx.telegram.sendMessage(ctx.message.from.id, "Hello, I am the verification bot for CryptoCache Premium. I will walk you through the verification process. Please respond with: $verify lookup email postcode/zipcode. For example:\n$verify lookup billing@cryptocache.tech 12345");
   }
-});
+});*/
 teleClient.on('channel_post', createMessageHandler(context));
 teleClient.on('message', createLookupHandler(context))
 
