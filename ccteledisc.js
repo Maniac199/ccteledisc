@@ -40,7 +40,7 @@ const onReadyHandler = createOnReadyHandler(context);
 
 // Setup handlers
 client.on('ready', onReadyHandler);
-teleClient.start(createStartHandler(ctx));
+teleClient.start(ctx => createStartHandler(ctx));
 /*teleClient.start((ctx) => {
   if(!ctx.message.from.is_bot) {
     ctx.reply('Request acknowledged, I have started a private chat with you.');
