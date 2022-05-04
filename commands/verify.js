@@ -126,7 +126,7 @@ const verify = (context) => {
                     ctx.reply('Account located, generating links');
                     const options = {
                         member_limit: 1,
-                        expire_date: Date.now() + (1000*60*60);
+                        expire_date: Date.now() + (1000*60*60)
                     }
                     console.log(Date.now() + ' plus 1 hour: ' + Date.now() + (1000*60*60));
                     const premLink = await ctx.telegram.createChatInviteLink(teleprem, options);
