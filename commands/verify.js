@@ -124,11 +124,12 @@ const verify = (context) => {
                 }
                 if (subResults.length > 0) {
                     ctx.reply('Account located, generating links');
+                    const date = Date.now() + (1000*60*60);
                     const options = {
                         member_limit: 1,
-                        expire_date: Date.now() + (1000*60*60)
+                        expire_date: date
                     }
-                    console.log(Date.now() + ' plus 1 hour: ' + Date.now() + (1000*60*60));
+                    console.log(Date.now() + ' plus 1 hour: ' + date);
                     const premLink = await ctx.telegram.createChatInviteLink(teleprem, options);
                     const swingLink = await ctx.telegram.createChatInviteLink(teleswing, options);
                     logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink.invite_link + ' Swing link: ' + swingLink.invite_link);
