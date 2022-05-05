@@ -33,6 +33,10 @@ const verify = (context) => {
             email = args[1];
             zip = args[2] + args[3];
         }
+        else {
+            email = "not provided";
+            zip = 12345;
+        }
     }
     else {
         args[0] = '';
@@ -107,7 +111,7 @@ const verify = (context) => {
             con.release();
         });
     }*/
-    if(args[0] === 'lookup') {
+    if(args[0] === 'lookup' && zip !== 12345) {
         ctx.reply('Standby, looking up the information provided.');
         let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND LOWER(meta_value) = ? AND REPLACE(LOWER(postcode), ' ', '') = ?",
             [
@@ -154,6 +158,9 @@ const verify = (context) => {
                 }
             });
         });
+    }
+    else {
+        ctx.reply("You sent an invalid request. \n\nPlease respond with: $verify lookup email postcode/zipcode. \n\nFor example:\n$verify lookup billing@cryptocache.tech 12345");
     }
 };
 
