@@ -109,13 +109,13 @@ const verify = (context) => {
     }*/
     if(args[0] === 'lookup') {
         ctx.reply('Standby, looking up the information provided.');
-        let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND meta_value = ? AND postcode = ?",
+        let valSub = mysql.format("SELECT * FROM pxg_wc_customer_lookup LEFT JOIN pxg_wc_order_product_lookup ON pxg_wc_customer_lookup.customer_id = pxg_wc_order_product_lookup.customer_id LEFT JOIN pxg_postmeta ON pxg_wc_order_product_lookup.order_id = pxg_postmeta.post_id WHERE post_id IN ( SELECT meta_value FROM pxg_postmeta WHERE post_id IN ( SELECT post_id FROM pxg_postmeta WHERE meta_key = ?) AND meta_key = ?) AND meta_key = ? AND LOWER(meta_value) = ? AND REPLACE(LOWER(postcode), ' ', '') = ?",
             [
                 '_subscription_id',
                 '_order_id',
                 '_billing_email',
-                email,
-                zip
+                email.toLowerCase(),
+                zip.toLowerCase().replace(/\s+/g, '')
             ]);
         billingDB.getConnection((err, con) => {
             con.query(valSub, async (err, subResults) => {
