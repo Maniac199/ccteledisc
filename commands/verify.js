@@ -23,19 +23,24 @@ const verify = (context) => {
             //testmode = true;
             message.reply('Proceeding in test mode');
         }
-        else if(args.length === 3 && args[0] === 'lookup') {
+        if(args[0] === 'test') {
+            testmode = true;
+            message.reply('Proceeding in test mode');
+        }
+        if(args.length === 2 && (args[0] === 'lookup' || args[0] === 'test')) {
+
+            email = args[1];
+            zip = '';
+        }
+        else if(args.length === 3 && (args[0] === 'lookup' || args[0] === 'test')) {
 
             email = args[1];
             zip = args[2];
         }
-        else if(args.length === 4 && args[0] === 'lookup') {
+        else if(args.length === 4 && (args[0] === 'lookup' || args[0] === 'test')) {
 
             email = args[1];
             zip = args[2] + args[3];
-        }
-        else {
-            email = "not provided";
-            zip = 12345;
         }
     }
     else {
