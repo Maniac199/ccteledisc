@@ -133,7 +133,7 @@ const verify = (context) => {
                 }
                 if (subResults.length > 0) {
                     ctx.reply('Account located, generating links');
-                    const date = Date.now(); //+ (1000*60*60*4);
+                    const date = Date.now() + (1000*60*60*24);
                     console.log(date);
                     const options = {
                         member_limit: 1,
