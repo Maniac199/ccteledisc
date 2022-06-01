@@ -134,7 +134,7 @@ const verify = (context) => {
                 if (subResults.length > 0) {
                     ctx.reply('Account located, generating links');
                     const date = Date.now() + (1000*60*60*4);
-                    console.log(date.toString());
+                    console.log(date.toLocaleString());
                     const options = {
                         member_limit: 1,
                         expire_date: date
