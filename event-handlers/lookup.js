@@ -20,7 +20,7 @@ const createLookupHandler = context => ctx => {
       }
     }
   } catch (e) {
-
+    logChan.send(e);
   }
 };
 
