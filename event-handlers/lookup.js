@@ -1,9 +1,10 @@
 const commandList = require('../command-list');
 
 const createLookupHandler = context => ctx => {
-  const { configuration } = context;
-  const { botPrefix, botLogsChannel} = configuration;
+  const { configuration, client } = context;
+  const { botPrefix, botLogsChannel, mainServerID} = configuration;
   context.ctx = ctx;
+  let theGuild = client.guilds.cache.find(g => g.id === mainServerID);
   let logChan = theGuild.channels.cache.find(c => c.id === botLogsChannel);
   try {
     if (ctx.update.message.text) {
