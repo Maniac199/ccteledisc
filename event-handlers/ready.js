@@ -8,6 +8,7 @@ const createOnReadyHandler = (context) => () => {
     .channels.cache.find(
       (channel) => channel.id === configuration.botLogsChannel
     );
+  context.logChannel.send('Started Bot');
 };
 
 module.exports = createOnReadyHandler;
