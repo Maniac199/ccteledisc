@@ -139,9 +139,9 @@ const verify = (context) => {
                         }
                         //console.log(Date.now() + ' plus 1 hour: ' + date);
                         const premLink = await ctx.telegram.createChatInviteLink(teleprem, options);
-                        const swingLink = await ctx.telegram.createChatInviteLink(teleswing, options);
-                        logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink.invite_link + ' Swing link: ' + swingLink.invite_link);
-                        ctx.reply("Please use these one time use links to access the channels:\nPremium: " + premLink.invite_link + "\nSwings: " + swingLink.invite_link);
+                        //const swingLink = await ctx.telegram.createChatInviteLink(teleswing, options);
+                        logChan.send(ctx.message.from.username + ' used ' + ctx.message.text + ' and was granted access. Premium link: ' + premLink.invite_link);
+                        ctx.reply("Please use this one time use link to access the channel:\nPremium: " + premLink.invite_link);
                         botDB.getConnection(async (err, botcon) => {
                             let botIns = mysql.format('INSERT INTO telegram (telegram_user, telegram_id, order_id) VALUES (?, ?, ?)',
                                 [
